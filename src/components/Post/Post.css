@@ -1,0 +1,35 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    max-width: 100%;
+
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 30px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+
+    -moz-border-radius:15px;
+    -khtml-border-radius:15px;
+    -webkit-border-radius:15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.21);
+
+    word-wrap: break-word;
+}
+
+.post h3 {
+    margin: 0
+}
+
+.post__title, .post__info {
+    max-width: inherit;
+    box-sizing: border-box;
+}
+
+.blue__words {
+    color: #3940d7;
+}

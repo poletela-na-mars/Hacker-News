@@ -1,0 +1,34 @@
+.header {
+    height: 130px;
+    background-color: #3940d7;
+    color: white;
+    font-size: 20px;
+    font-family: "Exo 2 Medium";
+}
+
+.header .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.update__img {
+    height: 30px;
+    width: 30px;
+    background-image: url(../../img/update.png);
+    background-position: center;
+    background-size: cover;
+    margin-left: 50px;
+
+    transition: transform .7s ease-in-out;
+}
+
+.update__img:hover {
+    cursor: pointer;
+    transform: rotate(360deg);
+}
+
+/*.update__img:active {*/
+/*    transform: rotate(360deg);*/
+/*}*/
