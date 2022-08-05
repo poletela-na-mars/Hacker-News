@@ -3,11 +3,12 @@ import './Header.css';
 import { parseNews } from '../parseNews';
 import App from "../../App";
 import {connect} from "react-redux";
+import store from '../../store';
 
 class Header extends React.Component{
     constructor(props) {
         super(props);
-        this.state = { update: true };
+        //this.state = { update: true };
     }
 
     // componentDidMount() {
@@ -25,8 +26,10 @@ class Header extends React.Component{
                     {this.props.sitename}
                     {/*<div className="update_img" onClick={() => this.state.onChange(this.state.arr)}></div>*/}
                     {/*<div className="update_img" onClick={() => this.props.onChange}></div>*/}
-                    <div className="update__img" onClick={() => { this.props.onChange(this.state.update) }}></div>
-                    <div className="update__img" onClick={() => { this.props.onChange(this.state.update) }}></div>
+                    {/*<div className="update__img" onClick={() => { this.props.onChange(this.state.update) }}></div>*/}
+                    <div className="update__img" onClick={() => { store.dispatch({ type: 'UPDATING' });
+                        console.log(store.getState()); }}>
+                    </div>
                 </div>
             </header>
         );

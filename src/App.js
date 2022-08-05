@@ -7,25 +7,26 @@ import './components/scrollTopButton';
 
 import Header from './components/Header/Header';
 import NewsFeed from './components/NewsFeed/NewsFeed';
+import store from './store';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         //this.handleChange = this.handleChange.bind(this);
-        this.state = { update: false };
+        //this.state = { update: false };
     }
 
     // handleChange(e) {
     //     this.setState({arr: arrOfNewsObj});
     // }
 
-    onChange = () => {
-        this.setState(prevState => ({
-            update: !prevState.update
-        }));
-        console.log("OnChange");
-        console.log(this.state.update);
-    }
+    // onChange = () => {
+    //     this.setState(prevState => ({
+    //         update: !prevState.update
+    //     }));
+    //     console.log("OnChange");
+    //     console.log(this.state.update);
+    // }
 
     // componentWillMount() {
     //     parseNews().then(response => {
@@ -40,6 +41,7 @@ class App extends React.Component {
         //     update: !prevState.update
         // }));
         console.log("compDidMount in App");
+        console.log(store.getState());
     }
 
 
@@ -48,9 +50,9 @@ class App extends React.Component {
         return (
             <div className="app">
                 {/*<Header sitename="Hacker News" onChange={this.onChange}></Header>*/}
-                <Header sitename="Hacker News" onChange={this.onChange}></Header>
-                <button id="scroll_top">Scroll</button>
-                <NewsFeed update={this.state.update} onChange={this.onChange}>
+                <Header sitename="Hacker News"></Header>
+                <button title="Scroll" id="scroll_top"></button>
+                <NewsFeed>
                 {/*<NewsFeed onChange={this.onChange}>*/}
                 {/*{!arr.length || arr.length !== 20 ? (*/}
                 {/*    //<span>Loading...</span>*/}
@@ -79,7 +81,7 @@ class App extends React.Component {
  **/
 function mapDispatchToProps(dispatch) {
     return {
-        updatePage: (update) => { dispatch({type: "UPDATING", update}) }
+        updatePage: (update) => { dispatch({type: "UPDATING", update}) },
     }
 }
 /**

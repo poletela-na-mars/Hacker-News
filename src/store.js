@@ -9,15 +9,15 @@ const store = createStore((state = initialState, action) => {
     switch (action.type) {
         case "UPDATING":
             return { ...state, update: { updating: true } };
-            break;
+            // break;
 
         case "UPDATED":
             return { ...state, update: { updating: false } };
-            break;
+            // break;
 
         default:
             return state;
-            break;
+            // break;
     }
 })
 
