@@ -25,6 +25,18 @@
     margin: 0
 }
 
+.post__info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.rating, .author, .date {
+    margin-right: 15px;
+}
+
 .post__title, .post__info {
     max-width: inherit;
     box-sizing: border-box;

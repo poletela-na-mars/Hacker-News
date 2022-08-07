@@ -1,8 +1,6 @@
 import React from 'react';
 import './Header.css';
-import { parseNews } from '../parseNews';
-import App from "../../App";
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import store from '../../store';
 
 class Header extends React.Component{
@@ -24,11 +22,9 @@ class Header extends React.Component{
             <header className="header">
                 <div className="container">
                     {this.props.sitename}
-                    {/*<div className="update_img" onClick={() => this.state.onChange(this.state.arr)}></div>*/}
-                    {/*<div className="update_img" onClick={() => this.props.onChange}></div>*/}
-                    {/*<div className="update__img" onClick={() => { this.props.onChange(this.state.update) }}></div>*/}
                     <div className="update__img" onClick={() => { store.dispatch({ type: 'UPDATING' });
-                        console.log(store.getState()); }}>
+                        console.log(store.getState());
+                    }}>
                     </div>
                 </div>
             </header>

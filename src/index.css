@@ -8,6 +8,12 @@ body {
   /*-moz-osx-font-smoothing: grayscale;*/
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 code {
   /*font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',*/
   /*  monospace;*/
@@ -28,18 +34,19 @@ code {
 }
 
 .load {
-  min-height: 300px;
+  /*min-height: 650px;*/
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 #scroll_top {
   display: none;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 20px;
+  right: 20px;
   z-index: 1000;
   width: 32px;
   height: 32px;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { parseNews } from '../parseNews';
+import {arrOf100IdsNewStories, parseNews} from '../parseNews';
 
 import Loader from '../Spinner/Spinner';
 import Post from '../Post/Post';
@@ -59,13 +59,13 @@ class NewsFeed extends React.Component {
         }
 
         return (
-            !arr.length || arr.length !== 20 ? (
+            !arr.length || arr.length !== 20 || !arrOf100IdsNewStories.length ? (
                 //<span>Loading...</span>
                 <div className="load">
                     <Loader></Loader>
                 </div>
             ) : (
-                <div>
+                <div className="news__feed">
                     {
                         arr.map(({title, rating, author, date}, key) => (
                             <Post

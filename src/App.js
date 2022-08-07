@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import './components/scrollTopButton';
 
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import NewsFeed from './components/NewsFeed/NewsFeed';
+
 import store from './store';
 
 class App extends React.Component {
@@ -51,7 +53,7 @@ class App extends React.Component {
             <div className="app">
                 {/*<Header sitename="Hacker News" onChange={this.onChange}></Header>*/}
                 <Header sitename="Hacker News"></Header>
-                <button title="Scroll" id="scroll_top"></button>
+                <button title="Наверх" id="scroll_top"></button>
                 <NewsFeed>
                 {/*<NewsFeed onChange={this.onChange}>*/}
                 {/*{!arr.length || arr.length !== 20 ? (*/}
@@ -71,6 +73,7 @@ class App extends React.Component {
                 {/*    ))*/}
                 {/*)}*/}
                 </NewsFeed>
+                <Footer></Footer>
             </div>
         );
     }

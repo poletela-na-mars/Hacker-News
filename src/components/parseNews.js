@@ -1,5 +1,5 @@
-let arrOf100IdsNewStories = new Array(20);
-let arrOf100IdsOldStories = new Array(20);
+export let arrOf100IdsNewStories = new Array(100);
+let arrOf100IdsOldStories = new Array(100);
 
 export async function parseNews() {
     arrOf100IdsNewStories.length = 0;
@@ -14,7 +14,7 @@ export async function parseNews() {
     // })
     // .catch(err => console.log(err));
     let json = await response.json();
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 100; i++) {
         arrOf100IdsNewStories.push(json[i]);
     }
 
@@ -38,14 +38,17 @@ export async function parseNews() {
         }
     }
 
-    await fetchInfo();
+    await fetchInfo(count);
+    //return 20 arrOfNewsObj
     return arrOfNewsObj;
 }
 
 let arrOfNewsObj = [];
+let count = 0;
 
-export async function fetchInfo() {
+export async function fetchInfo(count) {
     arrOfNewsObj.length = 0;
+
     for (let i = 0; i < arrOf100IdsOldStories.length; i++) {
         let url = "https://hacker-news.firebaseio.com/v0/item/" + arrOf100IdsOldStories[i] + ".json?print=pretty";
         let response = await fetch(url).catch(err => console.log(err));
