@@ -1,12 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+
 import './Header.css';
+
 import {connect} from 'react-redux';
 import store from '../../store';
+import {Loaded} from '../NewsFeed/NewsFeed';
 
-class Header extends React.Component{
+let l = new Loaded();
+
+class Header extends React.Component {
     constructor(props) {
         super(props);
-        //this.state = { update: true };
+        // this.state = { updatedManually: true };
     }
 
     // componentDidMount() {
@@ -21,8 +27,11 @@ class Header extends React.Component{
         return (
             <header className="header">
                 <div className="container">
-                    {this.props.sitename}
-                    <div className="update__img" onClick={() => { store.dispatch({ type: 'UPDATING' });
+                    <Link to="/"
+                          style={{textDecoration: 'none', color: 'inherit'}}>{this.props.sitename}</Link>
+                    <div className="update__img" onClick={() => {
+                        l.setLoadedMore(false);
+                        store.dispatch({type: 'UPDATING'});
                         console.log(store.getState());
                     }}>
                     </div>
@@ -32,14 +41,19 @@ class Header extends React.Component{
     }
 }
 
+// export let updatedManually = false;
+
 /**
  * отправка maps в props
  **/
 function mapDispatchToProps(dispatch) {
     return {
-        updatePage: (update) => { dispatch({type: "UPDATING", update}) }
+        updatePage: (update) => {
+            dispatch({type: "UPDATING", update})
+        }
     }
 }
+
 /**
  * maps передаёт свойство в props
  **/
@@ -48,6 +62,7 @@ function mapStateToProps(state) {
         update: state.update
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 //export default Header;

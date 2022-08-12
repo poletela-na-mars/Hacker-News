@@ -1,33 +1,35 @@
 import React from 'react';
-import './App.css';
-import './index.css';
+import '../App.css';
+import '../index.css';
 import { connect } from 'react-redux';
 
-import './components/scrollTopButton';
+// import '../components/scrollTopButton';
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import NewsFeed from './components/NewsFeed/NewsFeed';
+import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
+import ScrollTop from '../components/ScrollTop/ScrollTop';
+import NewsFeed from '../components/NewsFeed/NewsFeed';
 
-import store from './store';
+import store from '../store';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         //this.handleChange = this.handleChange.bind(this);
-        //this.state = { update: false };
+        // this.state = { updatedManually: false };
     }
 
     // handleChange(e) {
     //     this.setState({arr: arrOfNewsObj});
     // }
 
-    // onChange = () => {
-    //     this.setState(prevState => ({
-    //         update: !prevState.update
-    //     }));
+    // onChange = (value) => {
+    //     this.setState({ updatedManually: value }, () => {
+    //         console.log('updated state value', this.state.updatedManually);
+    //     })
+    //
     //     console.log("OnChange");
-    //     console.log(this.state.update);
+    //     console.log(this.state.updatedManually);
     // }
 
     // componentWillMount() {
@@ -52,8 +54,9 @@ class App extends React.Component {
         return (
             <div className="app">
                 {/*<Header sitename="Hacker News" onChange={this.onChange}></Header>*/}
-                <Header sitename="Hacker News"></Header>
-                <button title="Наверх" id="scroll_top"></button>
+                <Header sitename="Hacker News" onChange={this.onChange}></Header>
+                {/*<button title="Наверх" id="scroll__top"></button>*/}
+                <ScrollTop />
                 <NewsFeed>
                 {/*<NewsFeed onChange={this.onChange}>*/}
                 {/*{!arr.length || arr.length !== 20 ? (*/}
@@ -84,7 +87,7 @@ class App extends React.Component {
  **/
 function mapDispatchToProps(dispatch) {
     return {
-        updatePage: (update) => { dispatch({type: "UPDATING", update}) },
+        updatePage: (update) => { dispatch({type: "UPDATING", update}) }
     }
 }
 /**

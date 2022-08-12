@@ -1,7 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import {arrOf100IdsNewStories, parseNews} from '../parseNews';
+import '../LoadMore/LoadMore.css';
+
+import {arrStateNewStories, parseNews, loadMore} from '../parseNews';
 
 import Loader from '../Spinner/Spinner';
 import Post from '../Post/Post';
@@ -14,6 +16,8 @@ class NewsFeed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {arr: 0};
+        this.buttonLoadMore = React.createRef();
+
     }
 
     componentWillMount() {
@@ -28,10 +32,24 @@ class NewsFeed extends React.Component {
             console.log("обновление");
             // this.props.onChange(this.state.arr);
         }, 60000);
+        console.log("didMount in NewsFeed");
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("did Upd in NewsFeed");
+        // loadedMore = !!this.buttonLoadMore.current.style.disabled;
+        if (this.buttonLoadMore) {
+            if (this.buttonLoadMore.disabled === true) loadedMore = true;
+            // else {
+            //     loadedMore = false;
+            // }
+            //loadedMore = !!this.buttonLoadMore.disabled;
+            console.log(`${loadedMore}, loadedMore `);
+        }
     }
 
     parseFunc = () => {
@@ -43,9 +61,15 @@ class NewsFeed extends React.Component {
     }
 
     updateStore = () => {
+        // if (store.getState() === {
+        //     update: {
+        //         updating: true
+        //     }
+        // } ) { console.log("проверка на if - load") };
+        console.log(store.getState());
         this.parseFunc();
         //store.dispatch({ type: 'UPDATED' });
-        console.log("Update Store"); // при каждом обращение к store будет выводить его значение
+        console.log("Update Store");
     }
 
     render() {
@@ -53,23 +77,24 @@ class NewsFeed extends React.Component {
 
         if (firstTimeSub) {
             store.subscribe(this.updateStore); // Подписываемся на вызов store
-            const unsubscribe = store.subscribe(this.updateStore);
-            unsubscribe();
+            // const unsubscribe = store.subscribe(this.updateStore);
+            // unsubscribe();
             firstTimeSub = false;
         }
 
         return (
-            !arr.length || arr.length !== 20 || !arrOf100IdsNewStories.length ? (
+            !arr.length || arr.length < 50 || arrStateNewStories === false ? (
                 //<span>Loading...</span>
                 <div className="load">
                     <Loader></Loader>
                 </div>
             ) : (
-                <div className="news__feed">
+                <div className="news-feed">
                     {
-                        arr.map(({title, rating, author, date}, key) => (
+                        arr.map(({id, title, rating, author, date}) => (
+                        // arr.map((a) => (
                             <Post
-                                key={key}
+                                key={id}
                                 title={title}
                                 rating={rating}
                                 author={author}
@@ -77,10 +102,31 @@ class NewsFeed extends React.Component {
                             />
                         ))
                     }
+                    <div className="load-more">
+                        <div className="container-for-load-more">
+                            <button className="load__more" ref={b => this.buttonLoadMore = b} disabled={false}
+                                    onClick={(e) => {
+                                        e.target.style.opacity = 0.5;
+                                        this.buttonLoadMore.disabled = true;
+                                        loadMore().then(response => {
+                                            this.setState({
+                                                arr: response
+                                            });
+                                        });
+                                    }}></button>
+                        </div>
+                    </div>
                 </div>
             )
         );
     }
+}
+
+export let loadedMore = false;
+export function Loaded() {
+    this.setLoadedMore = function(flag) {
+        loadedMore = flag;
+    };
 }
 
 /**
@@ -88,9 +134,12 @@ class NewsFeed extends React.Component {
  **/
 function mapDispatchToProps(dispatch) {
     return {
-        updatePage: (update) => { dispatch({type: "UPDATING", update}) }
+        updatePage: (update) => {
+            dispatch({type: "UPDATING", update})
+        }
     }
 }
+
 /**
  * maps передаёт свойство в props
  **/

@@ -11,8 +11,8 @@ const store = createStore((state = initialState, action) => {
             return { ...state, update: { updating: true } };
             break;
 
-        case "UPDATED":
-            return { ...state, update: { updating: false } };
+        case "LOAD_MORE":
+            return { ...state, load: { loading: true } };
             break;
 
         default:

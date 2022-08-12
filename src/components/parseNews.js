@@ -1,10 +1,16 @@
-export let arrOf100IdsNewStories = new Array(100);
+import { loadedMore } from './NewsFeed/NewsFeed';
+export let arrStateNewStories = false; //false - empty
+
+let arrOf100IdsNewStories = new Array(100);
 let arrOf100IdsOldStories = new Array(100);
 
 export async function parseNews() {
     arrOf100IdsNewStories.length = 0;
+    arrStateNewStories = false;
     let response = await fetch("https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty")
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err)
+        });
     // .then(results => results.json())
     // .then(data => {
     //     for (let i = 0; i < 100; i++) {
@@ -38,30 +44,101 @@ export async function parseNews() {
         }
     }
 
-    await fetchInfo(count);
-    //return 20 arrOfNewsObj
+    arrStateNewStories = true;
+    await fetchInfo();
     return arrOfNewsObj;
 }
 
 let arrOfNewsObj = [];
-let count = 0;
 
-export async function fetchInfo(count) {
+export async function fetchInfo() {
     arrOfNewsObj.length = 0;
 
-    for (let i = 0; i < arrOf100IdsOldStories.length; i++) {
-        let url = "https://hacker-news.firebaseio.com/v0/item/" + arrOf100IdsOldStories[i] + ".json?print=pretty";
-        let response = await fetch(url).catch(err => console.log(err));
-        // .then(results => results.json())
-        // .then(data => {
-        //     //let post = new PostCreation(data.id, data.title, data.score, data.by, data.time, data.url);
-        //     arrOfNewsObj.push(new PostCreation(data.id, data.title, data.score, data.by, data.time, data.url));
-        // })
-        // .catch(err => console.log(err));
-        let json = await response.json();
-        arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time));
+    //let startIdx;
+    let endIdx = 50;
+
+    // switch (count) {
+    //     case 0:
+    //         startIdx = 0;
+    //         endIdx = 20;
+    //         break;
+    //     case 1:
+    //         startIdx = 20;
+    //         endIdx = 40;
+    //         break;
+    //     case 2:
+    //         startIdx = 40;
+    //         endIdx = 60;
+    //         break;
+    //     case 3:
+    //         startIdx = 60;
+    //         endIdx = 80;
+    //         break;
+    //     case 4:
+    //         startIdx = 80;
+    //         endIdx = 100;
+    //         break;
+    //     default:
+    //         return;
+    // }
+
+    if (loadedMore) {
+        endIdx = 100;
+        // if (updatedManually) {
+        //     endIdx = 50;
+        //     loadedMore = false;
+        // }
     }
+
+
+    // for (startIdx; startIdx < endIdx; startIdx++) {
+    for (let i = 0; i < endIdx; i++) {
+        let url = "https://hacker-news.firebaseio.com/v0/item/" + arrOf100IdsOldStories[i] + ".json?print=pretty";
+        // let response = await fetch(url).catch(err => {
+        //     console.log(err)
+        // });
+        // let json = await response.json();
+        // arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time));
+        await getResponseAndPushToArr(url);
+    }
+
+    // count++;
+    // if (count === 5) {
+    //     count = 0;
+    //     arrOfNewsObj.length = 0;
+    //     //УБРАТЬ КНОПКУ
+    // }
 }
+
+// export let loadedMore = false;
+// let updatedManually = false;
+
+export async function loadMore() {
+    let cashed100Ids = arrOf100IdsOldStories;
+    // updatedManually = updM;
+
+    for (let i = 50; i < 100; i++) {
+        let url = "https://hacker-news.firebaseio.com/v0/item/" + cashed100Ids[i] + ".json?print=pretty";
+        // let response = await fetch(url).catch(err => {
+        //     console.log(err)
+        // });
+        // let json = await response.json();
+        // arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time));
+        await getResponseAndPushToArr(url);
+    }
+
+    // loadedMore = true;
+    return arrOfNewsObj;
+}
+
+async function getResponseAndPushToArr(url) {
+    let response = await fetch(url).catch(err => {
+        console.log(err)
+    });
+    let json = await response.json();
+    arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time, json.url));
+}
+
 
 class PostCreation {
     constructor(id, title, rating, author, date, url) {
@@ -70,7 +147,7 @@ class PostCreation {
         this.rating = rating;
         this.author = author;
         this.date = date;
-        //this.url = url;
+        this.url = url;
     }
 }
 

@@ -1,0 +1,23 @@
+.footer {
+    height: 80px;
+    background-color: #3940d7;
+    color: white;
+    font-family: "Exo 2 Light";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+
+    position: relative;
+    z-index: 0;
+}
+
+.link__to__github {
+    text-decoration: none;
+    color: white;
+}
+
+.link__to__github:hover {
+    color: white;
+}

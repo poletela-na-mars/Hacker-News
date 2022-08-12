@@ -1,11 +1,15 @@
 import React from 'react';
-import './Post.css';
-import { fixDate } from './fixDate';
+import {Link} from 'react-router-dom';
 
-let Post = ({ title, rating, author, date }) => {
+import './Post.css';
+import {fixDate} from './fixDate';
+
+let Post = ({id, title, rating, author, date, url}) => {
     return (
         <div className="post">
-            <div className="post__title"><h3>{title}</h3></div>
+            <Link to={{ pathname: '/news-page', newsPageProps: id }}  style={{textDecoration: 'none', color: 'inherit'}}>
+                <div className="post__title"><h3>{title}</h3></div>
+            </Link>
             <div className="post__info">
                 <div className="rating"><span className="blue__words">Rating:</span>&ensp;{rating}</div>
                 <div className="author"><span className="blue__words">Author:</span>&ensp;{author}</div>

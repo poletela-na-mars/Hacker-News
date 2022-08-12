@@ -42,6 +42,10 @@
     box-sizing: border-box;
 }
 
+.post__title:hover {
+    color: #3940d7;
+}
+
 .blue__words {
     color: #3940d7;
 }
