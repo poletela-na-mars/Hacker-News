@@ -1,14 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import '../LoadMore/LoadMore.css';
+import '../Post/Post.css';
 
-import {arrStateNewStories, parseNews, loadMore} from '../parseNews';
+import {arrStateNewStories, loadMore, parseNews} from '../parseNews';
 
 import Loader from '../Spinner/Spinner';
-import Post from '../Post/Post';
 
 import store from '../../store';
+import {fixDate} from "../Post/fixDate";
 
 let firstTimeSub = true;
 
@@ -92,19 +94,35 @@ class NewsFeed extends React.Component {
                 <div className="news-feed">
                     {
                         arr.map(({id, title, rating, author, date}) => (
-                        // arr.map((a) => (
-                            <Post
-                                key={id}
-                                title={title}
-                                rating={rating}
-                                author={author}
-                                date={date}
-                            />
+                            // <Link to='/news-page' state={{ newsPageProps: id }} key={id} style={{textDecoration: 'none', color: 'inherit'}}>
+                            // <Post
+                            //     key={id}
+                            //     title={title}
+                            //     rating={rating}
+                            //     author={author}
+                            //     date={date}
+                            // />
+                            <div className="post" key={id}>
+                                <Link to='/news-page' state={{newsPageProps: id}}
+                                      style={{textDecoration: 'none', color: 'inherit'}}>
+                                    <div className="post__title"><h3>{title}</h3></div>
+                                </Link>
+                                <div className="post__info">
+                                    <div className="rating"><span className="blue__words">Rating:</span>&ensp;{rating}
+                                    </div>
+                                    <div className="author"><span className="blue__words">Author:</span>&ensp;{author}
+                                    </div>
+                                    <div className="date"><span
+                                        className="blue__words">Date:</span>&ensp;{fixDate(date)}</div>
+                                </div>
+                            </div>
+                            // </Link>
                         ))
                     }
                     <div className="load-more">
                         <div className="container-for-load-more">
-                            <button className="load__more" ref={b => this.buttonLoadMore = b} disabled={false}
+                            <button className="load__more" ref={b => this.buttonLoadMore = b}
+                                    disabled={false}
                                     onClick={(e) => {
                                         e.target.style.opacity = 0.5;
                                         this.buttonLoadMore.disabled = true;
@@ -123,8 +141,9 @@ class NewsFeed extends React.Component {
 }
 
 export let loadedMore = false;
+
 export function Loaded() {
-    this.setLoadedMore = function(flag) {
+    this.setLoadedMore = function (flag) {
         loadedMore = flag;
     };
 }

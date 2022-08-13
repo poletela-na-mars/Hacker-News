@@ -7,7 +7,7 @@ import {fixDate} from './fixDate';
 let Post = ({id, title, rating, author, date, url}) => {
     return (
         <div className="post">
-            <Link to={{ pathname: '/news-page', newsPageProps: id }}  style={{textDecoration: 'none', color: 'inherit'}}>
+            <Link to='/news-page' state={{ newsPageProps: id }} style={{textDecoration: 'none', color: 'inherit'}}>
                 <div className="post__title"><h3>{title}</h3></div>
             </Link>
             <div className="post__info">

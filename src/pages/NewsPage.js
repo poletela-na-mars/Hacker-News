@@ -1,24 +1,39 @@
 import React from 'react';
-import Header from '../components/Header/Header';
+import MinHeader from '../components/Header/MinHeader';
 import Footer from '../components/Footer/Footer';
 import ScrollTop from '../components/ScrollTop/ScrollTop';
+import AboutNews from '../components/AboutNews/AboutNews';
+import {useLocation} from 'react-router-dom';
 
-class NewsPage extends React.Component {
-    constructor(props) {
-        super(props);
+export default function NewsPage () {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {id: 0};
+    // }
+
+    // componentDidMount() {
+    //     this.useGetId();
+    // }
+
+    function useGetId () {
+        const location = useLocation();
+        const { newsPageProps } = location.state;
+        return newsPageProps;
     }
 
-    render() {
+
+    // render() {
+    //     const id = this.state.id;
         return (
             <div className="news-page">
-                <Header sitename="Hacker News" onChange={this.onChange}></Header>
+                <MinHeader sitename="Hacker News"></MinHeader>
                 <ScrollTop />
-
+                <AboutNews idNews={useGetId()} />
                 <Footer></Footer>
             </div>
         )
-    }
+    // }
 
 }
 
-export default NewsPage;
+// export default NewsPage;
