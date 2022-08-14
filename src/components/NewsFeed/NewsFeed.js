@@ -102,7 +102,7 @@ class NewsFeed extends React.Component {
                             //     author={author}
                             //     date={date}
                             // />
-                            <div className="post" key={id}>
+                            <div className="post" key={id} lang="eng">
                                 <Link to='/news-page' state={{newsPageProps: id}}
                                       style={{textDecoration: 'none', color: 'inherit'}}>
                                     <div className="post__title"><h3>{title}</h3></div>

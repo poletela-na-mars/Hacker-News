@@ -49,7 +49,7 @@ export async function parseNews() {
     return arrOfNewsObj;
 }
 
-let arrOfNewsObj = [];
+export let arrOfNewsObj = [];
 
 export async function fetchInfo() {
     arrOfNewsObj.length = 0;

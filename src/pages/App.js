@@ -3,7 +3,7 @@ import '../App.css';
 import '../index.css';
 import { connect } from 'react-redux';
 
-// import '../components/scrollTopButton';
+import '../components/ScrollTop/scrollTopButton';
 
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';

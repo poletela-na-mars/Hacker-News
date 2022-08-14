@@ -1,18 +1,40 @@
 import React from 'react';
+import './AboutNews.css';
+import {arrOfNewsObj} from '../parseNews';
+import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {fixDate} from '../Post/fixDate';
 
-class AboutNews extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+function AboutNews(props) {
+    // constructor(props) {
+    //     super(props);
+    // }
 
-    render() {
-        return (
-            <div className="about-news">
-                <div className="title__backToFeed"><h2>{this.props.idNews}</h2></div>
-                <div className="info__panel"></div>
+    // render() {
+    return (
+        <div className="about-news" lang="en">
+            <div className="title__backToFeed">
+                <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
+                    <div className="go__back__img"></div>
+                </Link>
+                <h5><a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url}
+                       className="link__to__news">{arrOfNewsObj.find(obj => obj.id === props.idNews).title}</a></h5>
             </div>
-        );
-    }
+            <div className="info__panel">
+                <a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url} className="link__to__news__read">
+                    <div className="read__img"></div>
+                </a>
+                <div className="date__news"><span
+                    className="blue__words">Date:</span>&ensp;{fixDate(arrOfNewsObj.find(obj => obj.id === props.idNews).date)}
+                </div>
+                <div className="author__news"><span
+                    className="blue__words">Author:</span>&ensp;{arrOfNewsObj.find(obj => obj.id === props.idNews).author}
+                </div>
+            </div>
+        </div>
+    )
+        ;
+    // }
 }
 
 export default AboutNews;
