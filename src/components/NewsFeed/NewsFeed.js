@@ -1,16 +1,15 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import React from "react";
 
-import '../LoadMore/LoadMore.css';
-import '../Post/Post.css';
+import "../LoadMore/LoadMore.css";
+import "../Post/Post.css";
 
-import {arrStateNewStories, loadMore, parseNews} from '../parseNews';
+import {arrStateNewStories, loadMore, parseNews} from "../parseNews";
 
-import Loader from '../Spinner/Spinner';
+import Loader from "../Spinner/Spinner";
 
-import store from '../../store';
-import {fixDate} from "../Post/fixDate";
+import store from "../../store";
+import PostTitle from "../Post/PostTitle";
+import PostInfo from "../Post/PostInfo";
 
 let firstTimeSub = true;
 
@@ -19,20 +18,17 @@ class NewsFeed extends React.Component {
         super(props);
         this.state = {arr: 0};
         this.buttonLoadMore = React.createRef();
-
     }
 
     componentWillMount() {
         console.log("willMount in NewsFeed");
         this.parseFunc();
-        //this.props.onChange(this.state.arr);
     }
 
     componentDidMount() {
         this.interval = setInterval(() => {
             this.parseFunc();
             console.log("обновление");
-            // this.props.onChange(this.state.arr);
         }, 60000);
         console.log("didMount in NewsFeed");
     }
@@ -42,15 +38,10 @@ class NewsFeed extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("did Upd in NewsFeed");
-        // loadedMore = !!this.buttonLoadMore.current.style.disabled;
+        console.log("didUpd in NewsFeed");
         if (this.buttonLoadMore) {
             if (this.buttonLoadMore.disabled === true) loadedMore = true;
-            // else {
-            //     loadedMore = false;
-            // }
-            //loadedMore = !!this.buttonLoadMore.disabled;
-            console.log(`${loadedMore}, loadedMore `);
+            console.log(`${loadedMore}, loadedMore`);
         }
     }
 
@@ -63,14 +54,8 @@ class NewsFeed extends React.Component {
     }
 
     updateStore = () => {
-        // if (store.getState() === {
-        //     update: {
-        //         updating: true
-        //     }
-        // } ) { console.log("проверка на if - load") };
         console.log(store.getState());
         this.parseFunc();
-        //store.dispatch({ type: 'UPDATED' });
         console.log("Update Store");
     }
 
@@ -78,15 +63,12 @@ class NewsFeed extends React.Component {
         let arr = this.state.arr;
 
         if (firstTimeSub) {
-            store.subscribe(this.updateStore); // Подписываемся на вызов store
-            // const unsubscribe = store.subscribe(this.updateStore);
-            // unsubscribe();
+            store.subscribe(this.updateStore);
             firstTimeSub = false;
         }
 
         return (
             !arr.length || arr.length < 50 || arrStateNewStories === false ? (
-                //<span>Loading...</span>
                 <div className="load">
                     <Loader></Loader>
                 </div>
@@ -94,29 +76,10 @@ class NewsFeed extends React.Component {
                 <div className="news-feed">
                     {
                         arr.map(({id, title, rating, author, date}) => (
-                            // <Link to='/news-page' state={{ newsPageProps: id }} key={id} style={{textDecoration: 'none', color: 'inherit'}}>
-                            // <Post
-                            //     key={id}
-                            //     title={title}
-                            //     rating={rating}
-                            //     author={author}
-                            //     date={date}
-                            // />
                             <div className="post" key={id} lang="eng">
-                                <Link to='/news-page' state={{newsPageProps: id}}
-                                      style={{textDecoration: 'none', color: 'inherit'}}>
-                                    <div className="post__title"><h3>{title}</h3></div>
-                                </Link>
-                                <div className="post__info">
-                                    <div className="rating"><span className="blue__words">Rating:</span>&ensp;{rating}
-                                    </div>
-                                    <div className="author"><span className="blue__words">Author:</span>&ensp;{author}
-                                    </div>
-                                    <div className="date"><span
-                                        className="blue__words">Date:</span>&ensp;{fixDate(date)}</div>
-                                </div>
+                                <PostTitle id={id} title={title} />
+                                <PostInfo rating={rating} author={author} date={date} />
                             </div>
-                            // </Link>
                         ))
                     }
                     <div className="load-more">
@@ -148,54 +111,20 @@ export function Loaded() {
     };
 }
 
-/**
- * отправка maps в props
- **/
-function mapDispatchToProps(dispatch) {
-    return {
-        updatePage: (update) => {
-            dispatch({type: "UPDATING", update})
-        }
-    }
-}
-
-/**
- * maps передаёт свойство в props
- **/
-function mapStateToProps(state) {
-    return {
-        update: state.update
-    }
-}
-
-// const updateStore = () => {
-//     this.parseFunc();
-//     store.dispatch({ type: 'UPDATED' });
-//     console.log(store.getState()); // при каждом обращение к store будет выводить его значение
-// }
-
-// function select(state) {
-//     return state.update
-// }
-//
-// let currentValue
-// function handleChange() {
-//     let previousValue = currentValue
-//     currentValue = select(store.getState())
-//
-//     if (previousValue !== currentValue) {
-//         console.log(
-//             'Some deep nested property changed from',
-//             previousValue,
-//             'to',
-//             currentValue
-//         )
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         updatePage: (update) => {
+//             dispatch({type: "UPDATING", update})
+//         }
 //     }
 // }
 //
-// const unsubscribe = store.subscribe(handleChange);
-// unsubscribe();
+// function mapStateToProps(state) {
+//     return {
+//         update: state.update
+//     }
+// }
+//
+// export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewsFeed);
-
-//export default NewsFeed;
+export default NewsFeed;

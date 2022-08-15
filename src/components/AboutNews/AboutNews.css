@@ -33,7 +33,6 @@
     transform: rotate(360deg);
 }
 
-
 h5 {
     word-break: break-all;
     hyphens: auto;
@@ -71,8 +70,6 @@ a {
     background-color: #F0F1FF;
     font-size: 18px;
 
-    /*padding: 20px;*/
-    /*margin: 20px;*/
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 20px;
@@ -90,12 +87,8 @@ a {
 }
 
 .date__news, .author__news, .read__img {
-    /*margin: 5%;*/
     margin-right: 5%;
     margin-left: 5%;
-
-    /*max-width: inherit;*/
-    /*box-sizing: border-box;*/
 }
 
 .link__to__news__read {

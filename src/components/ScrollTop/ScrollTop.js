@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import './scrollTopButton';
+import "./scrollTopButton";
 
-import './ScrollTop.css';
+import "./ScrollTop.css";
 
 const ScrollTop = () => {
     return (
         <button title="Наверх" id="scroll__top"></button>
-    );
+    )
 };
 
 export default ScrollTop;

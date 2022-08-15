@@ -1,16 +1,10 @@
-import React from 'react';
-import './AboutNews.css';
-import {arrOfNewsObj} from '../parseNews';
-import {Link} from 'react-router-dom';
-import {useNavigate} from 'react-router-dom';
-import {fixDate} from '../Post/fixDate';
+import React from "react";
+import "./AboutNews.css";
+import {arrOfNewsObj} from "../parseNews";
+import {Link} from "react-router-dom";
+import {fixDate} from "../Post/fixDate";
 
 function AboutNews(props) {
-    // constructor(props) {
-    //     super(props);
-    // }
-
-    // render() {
     return (
         <div className="about-news" lang="en">
             <div className="title__backToFeed">
@@ -21,7 +15,8 @@ function AboutNews(props) {
                        className="link__to__news">{arrOfNewsObj.find(obj => obj.id === props.idNews).title}</a></h5>
             </div>
             <div className="info__panel">
-                <a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url} className="link__to__news__read">
+                <a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url}
+                   className="link__to__news__read">
                     <div className="read__img"></div>
                 </a>
                 <div className="date__news"><span
@@ -32,9 +27,7 @@ function AboutNews(props) {
                 </div>
             </div>
         </div>
-    )
-        ;
-    // }
+    );
 }
 
 export default AboutNews;

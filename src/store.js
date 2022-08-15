@@ -1,24 +1,20 @@
-import { createStore } from 'redux';
+import { createStore } from "redux";
 
 const initialState = {
     update: { updating: false }
-}
+};
 
 const store = createStore((state = initialState, action) => {
 
     switch (action.type) {
-        case "UPDATING":
+        case "UPDATED_MANUALLY":
             return { ...state, update: { updating: true } };
-            break;
-
-        case "LOAD_MORE":
-            return { ...state, load: { loading: true } };
             break;
 
         default:
             return state;
             break;
     }
-})
+});
 
 export default store;

@@ -10,6 +10,7 @@
     border-radius: 50%;
     opacity: 0.5;
 }
+
 #scroll__top:hover {
     opacity: 1;
 }
