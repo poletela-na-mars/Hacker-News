@@ -4,6 +4,8 @@ export let arrStateNewStories = false; //false - empty
 let arrOf100IdsNewStories = new Array(100);
 let arrOf100IdsOldStories = new Array(100);
 
+const store = require('store');
+
 export async function parseNews() {
     arrOf100IdsNewStories.length = 0;
     arrStateNewStories = false;
@@ -23,6 +25,9 @@ export async function parseNews() {
         if (arrOf100IdsOldStories[0] !== arrOf100IdsNewStories[i] && arrOf100IdsOldStories[0] != null) {
             continue;
         }
+        if (arrOf100IdsOldStories[0] === arrOf100IdsNewStories[0]) {
+            break;
+        }
         if (arrOf100IdsOldStories[0] === arrOf100IdsNewStories[i]) {
             for (let j = 0; j < i; j++) {
                 arrOf100IdsOldStories.pop();
@@ -38,6 +43,9 @@ export async function parseNews() {
 
     arrStateNewStories = true;
     await fetchInfo();
+
+    store.set('arrState', arrOfNewsObj);
+
     return arrOfNewsObj;
 }
 
@@ -71,21 +79,23 @@ export async function loadMore() {
 
 async function getResponseAndPushToArr(url) {
     let response = await fetch(url).catch(err => {
-        console.log(err)
+        console.log(err);
+        getResponseAndPushToArr(url);
     });
     let json = await response.json();
-    arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time, json.url));
+    arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time, json.url, json.text));
+
 }
 
-
 class PostCreation {
-    constructor(id, title, rating, author, date, url) {
+    constructor(id, title, rating, author, date, url, text) {
         this.id = id;
         this.title = title;
         this.rating = rating;
         this.author = author;
         this.date = date;
         this.url = url;
+        this.text = text;
     }
 }
 

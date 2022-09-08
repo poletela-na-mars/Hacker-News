@@ -2,8 +2,6 @@ import React from "react";
 import "../index.css";
 import {connect} from "react-redux";
 
-import "../components/ScrollTop/scrollTopButton";
-
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import ScrollTop from "../components/ScrollTop/ScrollTop";
@@ -13,8 +11,8 @@ function App() {
     return (
         <div className="app">
             <Header sitename="Hacker News"/>
-            <ScrollTop/>
-            <NewsFeed/>
+            <ScrollTop />
+            <NewsFeed />
             <Footer/>
         </div>
     );

@@ -1,29 +1,40 @@
 import React from "react";
 import "./AboutNews.css";
-import {arrOfNewsObj} from "../parseNews";
 import {Link} from "react-router-dom";
 import {fixDate} from "../Post/fixDate";
+import ReadImg from "./ReadImg";
 
 function AboutNews(props) {
+    // if (props.idNews === undefined) {
+    //     props.idNews = window.location.pathname;
+    // }
+
+    const store = require('store');
+    let arr = store.get('arrState');
+
     return (
         <div className="about-news" lang="en">
             <div className="title__backToFeed">
                 <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
                     <div className="go__back__img"></div>
                 </Link>
-                <h5><a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url}
-                       className="link__to__news">{arrOfNewsObj.find(obj => obj.id === props.idNews).title}</a></h5>
+                <h5><a target="_blank" href={arr.find(obj => obj.id === props.idNews).url}
+                       className="link__to__news">{arr.find(obj => obj.id === props.idNews).title}</a></h5>
+            </div>
+            <div className="optional__text"
+                 dangerouslySetInnerHTML={{__html: arr.find(obj => obj.id === props.idNews).text}}>
             </div>
             <div className="info__panel">
-                <a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url}
-                   className="link__to__news__read">
-                    <div className="read__img"></div>
-                </a>
+                {/*<a target="_blank" href={arrOfNewsObj.find(obj => obj.id === props.idNews).url}*/}
+                {/*   className="link__to__news__read">*/}
+                {/*    <div className="read__img"></div>*/}
+                {/*</a>*/}
+                <ReadImg url={arr.find(obj => obj.id === props.idNews).url} href={arr.find(obj => obj.id === props.idNews).url} />
                 <div className="date__news"><span
-                    className="blue__words">Date:</span>&ensp;{fixDate(arrOfNewsObj.find(obj => obj.id === props.idNews).date)}
+                    className="blue__words">Date:</span>&ensp;{fixDate(arr.find(obj => obj.id === props.idNews).date)}
                 </div>
                 <div className="author__news"><span
-                    className="blue__words">Author:</span>&ensp;{arrOfNewsObj.find(obj => obj.id === props.idNews).author}
+                    className="blue__words">Author:</span>&ensp;{arr.find(obj => obj.id === props.idNews).author}
                 </div>
             </div>
         </div>

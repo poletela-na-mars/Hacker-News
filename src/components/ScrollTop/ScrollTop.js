@@ -1,12 +1,10 @@
 import React from "react";
 
-import "./scrollTopButton";
-
 import "./ScrollTop.css";
 
 const ScrollTop = () => {
     return (
-        <button title="Наверх" id="scroll__top"></button>
+        <button title="Наверх" id="scroll__top" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' })}}></button>
     )
 };
 

@@ -70,7 +70,7 @@ class NewsFeed extends React.Component {
         return (
             !arr.length || arr.length < 50 || arrStateNewStories === false ? (
                 <div className="load">
-                    <Loader></Loader>
+                    <Loader />
                 </div>
             ) : (
                 <div className="news-feed">
