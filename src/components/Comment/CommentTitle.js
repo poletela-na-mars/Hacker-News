@@ -6,21 +6,22 @@ import {parseNestedComments} from "./parseComments";
 class CommentTitle extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {clicked: false};
+        // this.state = {clicked: false};
     }
 
 // = ({author, date, kids, id, onChange}) => {
 
     onChangeCom = () => {
-        this.setState({clicked: true});
-        console.log(this.state.clicked);
+        // this.setState({clicked: true});
+        // console.log(this.state.clicked);
         this.props.onChangeComGl(this.props.id);
     }
 
     render() {
         let flag = false;
 
-        if (this.props.kids) {
+        const  re = /\d+/;
+        if (this.props.kids && this.props.parent == re.exec(window.location.pathname)[0]) {
             flag = true;
         }
 
@@ -43,12 +44,12 @@ class CommentTitle extends React.Component {
 class CondNested extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {clicked: false};
+        // this.state = {clicked: false};
     }
 
     onChange = () => {
-        this.setState({clicked: true});
-        console.log(this.state.clicked);
+        // this.setState({clicked: true});
+        // console.log(this.state.clicked);
         this.props.onChangeCom();
     }
 
@@ -74,8 +75,8 @@ class NestedImg extends React.Component {
 
                 e.target.style.opacity = 0.5;
                 this.setState({wasClicked: true});
-                this.props.onChange();
-                await parseNestedComments(this.props.kidsArr, this.props.idParent);
+                // this.props.onChange();
+                await parseNestedComments(this.props.kidsArr, this.props.idParent, this.props.onChange);
             }
             }
             ></div>

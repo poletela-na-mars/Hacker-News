@@ -1,4 +1,5 @@
-import { loadedMore } from "./NewsFeed/NewsFeed";
+import {loadedMore} from "./NewsFeed/NewsFeed";
+
 export let arrStateNewStories = false; //false - empty
 
 let arrOf100IdsNewStories = new Array(100);
@@ -9,12 +10,17 @@ const store = require('store');
 export async function parseNews() {
     arrOf100IdsNewStories.length = 0;
     arrStateNewStories = false;
-    let response = await fetch("https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty")
+    /*let response = await fetch("https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty")
         .catch(err => {
             console.log(err)
         });
 
-    let json = await response.json();
+    let json = await response.json();*/
+
+    const url = "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty";
+    let json;
+    await getResponseAndPushToArr(url, false).then(response => json = response);
+
     for (let i = 0; i < 100; i++) {
         arrOf100IdsNewStories.push(json[i]);
     }
@@ -44,6 +50,7 @@ export async function parseNews() {
     arrStateNewStories = true;
     await fetchInfo();
 
+    store.clearAll();
     store.set('arrState', arrOfNewsObj);
 
     return arrOfNewsObj;
@@ -54,15 +61,16 @@ export let arrOfNewsObj = [];
 export async function fetchInfo() {
     arrOfNewsObj.length = 0;
 
+    let i = 0;
     let endIdx = 50;
 
-    if (loadedMore) {
+    if (loadedMore) {   // for update, when button '.load__more' is clicked
         endIdx = 100;
     }
 
-    for (let i = 0; i < endIdx; i++) {
-        let url = "https://hacker-news.firebaseio.com/v0/item/" + arrOf100IdsOldStories[i] + ".json?print=pretty";
-        await getResponseAndPushToArr(url);
+    for (i; i < endIdx; i++) {
+        const url = "https://hacker-news.firebaseio.com/v0/item/" + arrOf100IdsOldStories[i] + ".json?print=pretty";
+        await getResponseAndPushToArr(url, true);
     }
 }
 
@@ -71,20 +79,22 @@ export async function loadMore() {
 
     for (let i = 50; i < 100; i++) {
         let url = "https://hacker-news.firebaseio.com/v0/item/" + cashed100Ids[i] + ".json?print=pretty";
-        await getResponseAndPushToArr(url);
+        await getResponseAndPushToArr(url, true);
     }
 
     return arrOfNewsObj;
 }
 
-async function getResponseAndPushToArr(url) {
-    let response = await fetch(url).catch(err => {
+async function getResponseAndPushToArr(url, push) {
+    const response = await fetch(url).catch(err => {
         console.log(err);
-        getResponseAndPushToArr(url);
     });
-    let json = await response.json();
-    arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time, json.url, json.text));
-
+    const json = await response.json();
+    if (push) {
+        arrOfNewsObj.push(new PostCreation(json.id, json.title, json.score, json.by, json.time, json.url, json.text));
+    } else {
+        return json;
+    }
 }
 
 class PostCreation {

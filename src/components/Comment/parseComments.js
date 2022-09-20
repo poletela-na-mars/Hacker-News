@@ -16,7 +16,7 @@ export const parseComments = async (idNews) => {
             // });
             // let json = await response.json();
             const json = await getDataFromUrl(item);
-            arrComments.push(new CommentCreation(json.id, json.text, json.by, json.time, json.kids));
+            arrComments.push(new CommentCreation(json.id, json.text, json.by, json.time, json.kids, json.parent));
         }
 
         console.log(arrComments);
@@ -24,19 +24,24 @@ export const parseComments = async (idNews) => {
     } else return [];
 };
 
-export const parseNestedComments = async (kidsArr, idParent) => {
-    let comments = getCommentsTree(idParent).then(response => {
+export let comments = [];
+export const parseNestedComments = async (kidsArr, idParent, onChange) => {
+    await getCommentsTree(idParent).then(response => {
         console.log(response);
+        comments.push(...response);
+        console.log(comments);
+        onChange();
     });
 };
 
 class CommentCreation {
-    constructor(id, text, author, date, kids) {
+    constructor(id, text, author, date, kids, parent) {
         this.id = id;
         this.text = text;
         this.author = author;
         this.date = date;
         this.kids = kids;
+        this.parent = parent;
     }
 }
 
@@ -102,4 +107,3 @@ const getDataFromUrl = async (id) => {
     });
     return await response.json();
 };
-

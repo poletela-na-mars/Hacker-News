@@ -3,7 +3,7 @@ import React from "react";
 import "../LoadMore/LoadMore.css";
 import "../Post/Post.css";
 
-import {arrStateNewStories, loadMore, parseNews} from "../parseNews";
+import {arrOfNewsObj, arrStateNewStories, loadMore, parseNews} from "../parseNews";
 
 import Loader from "../Spinner/Spinner";
 
@@ -12,6 +12,7 @@ import PostTitle from "../Post/PostTitle";
 import PostInfo from "../Post/PostInfo";
 
 let firstTimeSub = true;
+const localStore = require('store');
 
 class NewsFeed extends React.Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class NewsFeed extends React.Component {
     }
 
     componentDidMount() {
+        this.checkButton();
         this.interval = setInterval(() => {
             this.parseFunc();
             console.log("обновление");
@@ -39,8 +41,12 @@ class NewsFeed extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("didUpd in NewsFeed");
+        this.checkButton();
+    }
+
+    checkButton = () => {
         if (this.buttonLoadMore) {
-            if (this.buttonLoadMore.disabled === true) loadedMore = true;
+            loadedMore = this.buttonLoadMore.disabled === true;
             console.log(`${loadedMore}, loadedMore`);
         }
     }
@@ -70,15 +76,15 @@ class NewsFeed extends React.Component {
         return (
             !arr.length || arr.length < 50 || arrStateNewStories === false ? (
                 <div className="load">
-                    <Loader />
+                    <Loader/>
                 </div>
             ) : (
                 <div className="news-feed">
                     {
                         arr.map(({id, title, rating, author, date}) => (
                             <div className="post" key={id} lang="eng">
-                                <PostTitle id={id} title={title} />
-                                <PostInfo rating={rating} author={author} date={date} />
+                                <PostTitle id={id} title={title}/>
+                                <PostInfo rating={rating} author={author} date={date}/>
                             </div>
                         ))
                     }
@@ -93,6 +99,8 @@ class NewsFeed extends React.Component {
                                             this.setState({
                                                 arr: response
                                             });
+                                            localStore.clearAll();
+                                            localStore.set('arrState', response);
                                         });
                                     }}></button>
                         </div>
@@ -106,7 +114,7 @@ class NewsFeed extends React.Component {
 export let loadedMore = false;
 
 export function Loaded() {
-    this.setLoadedMore = function (flag) {
+    this.setLoadedMore = (flag) => {
         loadedMore = flag;
     };
 }

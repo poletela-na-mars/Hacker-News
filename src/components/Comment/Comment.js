@@ -3,23 +3,26 @@ import "./Comment.scss";
 import {parseCounter} from "./parseCounter";
 import CommentTitle from "./CommentTitle";
 import CommentInfo from "./CommentInfo";
-import {parseComments} from "./parseComments";
+import {comments, parseComments} from "./parseComments";
 import Loader from "../Spinner/Spinner";
 
 class Comment extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {counter: ""};
-        this.state = {arr: 0};
+        this.state = {
+            counter: "",
+            arr: 0,
+            wasClicked: 0,
+            arrCom: 0,
+        };
+        // this.state = {arr: 0};
+        // this.state = {arrCom: 0};
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("didUpd in Comment");
-        console.log(this.state.wasClicked); //true - псле нажатия на стрелку для раскрытия
-
-        if (this.state.wasClicked === true) {
-
-        }
+        console.log(this.state.wasClicked);
+        console.log(comments);
     }
 
     componentWillMount() {
@@ -36,8 +39,9 @@ class Comment extends React.Component {
     }
 
     onChangeComGl = (id) => {
-        this.setState({wasClicked : id});
+        this.setState({wasClicked: id});
         console.log(this.state.wasClicked);
+        this.setState({arrCom: comments});
     }
 
     render() {
@@ -52,17 +56,21 @@ class Comment extends React.Component {
                 (
                     <div className="comment-section">
                         <div className="counter">
-                            {this.state.counter}
+                            <p>
+                                {this.state.counter}
+                            </p>
                         </div>
                         <div className="comments">
                             {
-                                arr.map(({id, text, author, date, kids}) => (
+                                arr.map(({id, text, author, date, kids, parent}) => (
                                     <div key={id}>
                                         <div className="comment" lang="eng">
-                                            <CommentTitle author={author} date={date} kids={kids} id={id} onChangeComGl={this.onChangeComGl}/>
+                                            <CommentTitle author={author} date={date} kids={kids} id={id} parent={parent}
+                                                          onChangeComGl={this.onChangeComGl}/>
                                             <CommentInfo text={text}/>
                                         </div>
-                                        <CondNestedUI kidsArr={kids} idParent={id} author={author} date={date}
+                                        <CondNestedUI kidsArr={this.state.arrCom} idParent={this.state.wasClicked} author={author}
+                                                      date={date}
                                                       kids={kids} id={id} text={text}/>
                                         {/*<div className="nested-comment">*/}
                                         {/*    <div className="comment" lang="eng">*/}
@@ -88,22 +96,24 @@ function CondNestedUI(props) {
     const kids = props.kids;
     const id = props.id;
     const text = props.text;
-    if (kidsArr) {
-        if ([kidsArr[0]].key) {
-            return <NestedComUI kidsArr={kidsArr} idParent={idParent} author={author} ate={date}
+
+    console.log(comments);
+    if (kidsArr !== undefined && idParent === id) {
+            return <NestedComUI kidsArr={kidsArr} idParent={idParent} author={author} date={date}
                                 kids={kids} id={id} text={text}/>;
-        }
     }
 }
 
 function NestedComUI(props) {
     return (
-        props.kids.map(({item}) => (
-                <div key={item.id}>
+        // props.kidsArr.map(({author, date, kids, id, text}) => (
+        //     props.kidsArr.filter(obj => obj.idParent === wasClicked).map(obj => (
+                props.kidsArr.map(obj => (
+                <div key={obj.id}>
                     <div className="nested-com">
-                        <CommentTitle author={item.author} date={item.date} kids={item.kids}
-                                      id={item.id}/>
-                        <CommentInfo text={item.text}/>
+                        <CommentTitle author={obj.by} date={obj.time} kids={obj.kids}
+                                      id={obj.id}/>
+                        <CommentInfo text={obj.text}/>
                     </div>
                 </div>
             )

@@ -28,3 +28,8 @@
     cursor: pointer;
     transform: rotate(360deg);
 }
+
+.container h1 {
+    margin: 0;
+    font-size: 20px;
+}

@@ -19,7 +19,7 @@ function AboutNews(props) {
                     <div className="go__back__img"></div>
                 </Link>
                 <h5><a target="_blank" href={arr.find(obj => obj.id === props.idNews).url}
-                       className="link__to__news">{arr.find(obj => obj.id === props.idNews).title}</a></h5>
+                       className="link__to__news"><p>{arr.find(obj => obj.id === props.idNews).title}</p></a></h5>
             </div>
             <div className="optional__text"
                  dangerouslySetInnerHTML={{__html: arr.find(obj => obj.id === props.idNews).text}}>

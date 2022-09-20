@@ -21,3 +21,7 @@
 .link__to__github:hover {
     color: white;
 }
+
+.link__to__github p {
+    margin: 0;
+}

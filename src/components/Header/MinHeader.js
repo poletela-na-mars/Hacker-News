@@ -9,7 +9,7 @@ function MinHeader (props) {
             <header className="header">
                 <div className="container">
                     <Link to="/"
-                          style={{textDecoration: 'none', color: 'inherit'}}>{props.sitename}</Link>
+                          style={{textDecoration: 'none', color: 'inherit'}}><h1>{props.sitename}</h1></Link>
                 </div>
             </header>
         );
