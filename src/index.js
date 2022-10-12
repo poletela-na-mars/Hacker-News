@@ -1,26 +1,27 @@
 import React from "react";
-import { Provider } from "react-redux";
+//import ReactDOM from "react-dom";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {Provider} from "react-redux";
+import {applyMiddleware, compose, createStore} from "redux";
+import thunk from "redux-thunk";
+
+import App from "./App";
+
+import {reducer} from "./reducer/reducer";
+import {api} from "./api";
+import {BrowserRouter} from "react-router-dom";
 import history from "./history";
 
-import App from "./pages/App";
-import NewsPage from "./pages/NewsPage";
-import store from "./store";
-
-import "../src/components/ScrollTop/scrollTopButton";
-
-import "./index.css";
+const store = createStore(reducer, compose(
+    applyMiddleware(thunk.withExtraArgument(api)),
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f)
+);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter history={history}>
         <Provider store={store}>
-            <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="news-page/:id" element={<NewsPage />} />
-            </Routes>
+            <App />
         </Provider>
     </BrowserRouter>
 );
-
