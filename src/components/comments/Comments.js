@@ -9,7 +9,7 @@ import {Operation} from "../../reducer/reducer";
 import { v4 as uuidv4 } from 'uuid';
 
 const Comments = (props) => {
-    const {articleComments, activeArticle, isCommentLoaded, 
+    const {articleComments, activeArticle, isCommentLoaded,
         getActiveArticle, changeRefreshStatus, changeCommentsLoadingStatus} = props;
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const Comments = (props) => {
             changeRefreshStatus(true);
             changeCommentsLoadingStatus(false);
             getActiveArticle(activeArticle.id);
-          }, 60000);
+        }, 60000);
 
         return () => {
             clearInterval(refreshInterval);
