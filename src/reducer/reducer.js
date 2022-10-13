@@ -71,6 +71,8 @@ const reducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 refreshStatus: action.payload
             });
+        default:
+            break;
     }
 
     return state;
