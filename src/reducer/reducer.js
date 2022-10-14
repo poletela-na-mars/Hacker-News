@@ -1,6 +1,7 @@
 import initialState from "./initial-state";
 import {ActionType, ActionCreator} from "./action-creator";
 import {getArticles, getCommentsTree, getArticle} from "../api";
+import {createReducer} from "@reduxjs/toolkit";
 
 const Operation = {
     getArticles: () => async (dispatch) => {
@@ -25,57 +26,95 @@ const Operation = {
     }
 };
 
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ActionType.CHANGE_LOADING_STATUS:
-            return Object.assign({}, state, {
-                isDataLoaded: action.payload
-            });
+//TODO: -axios
+//      -change Operation
+//      -delete props. in Comments
+//      -configureStore in index.js
 
-        case ActionType.GET_ARTICLES:
-            return Object.assign({}, state, {
-                articles: action.payload
-            });
 
-        case ActionType.CHANGE_ACTIVE_ARTICLE_ID:
-            return Object.assign({}, state, {
-                activeArticleId: action.payload
-            });
+const reducer = createReducer(initialState, (builder) => {
+    builder
+        .addCase(ActionType.CHANGE_LOADING_STATUS, (state, action) => {
+            state.isDataLoaded = action.payload;
+        })
+        .addCase(ActionType.GET_ARTICLES, (state, action) => {
+            state.articles = action.payload;
+        })
+        .addCase(ActionType.CHANGE_ACTIVE_ARTICLE_ID, (state, action) => {
+            state.activeArticleId = action.payload;
+        })
+        .addCase(ActionType.GET_ARTICLE_COMMENTS, (state, action) => {
+            state.articleComments = action.payload;
+        })
+        .addCase(ActionType.CHANGE_COMMENTS_LOADING_STATUS, (state, action) => {
+            state.isCommentLoaded = action.payload;
+        })
+        .addCase(ActionType.GET_ACTIVE_ARTICLE, (state, action) => {
+            state.activeArticle = action.payload;
+        })
+        .addCase(ActionType.CHANGE_ACTIVE_ARTICLE_LOADING_STATUS, (state, action) => {
+            state.isActiveArticleLoaded = action.payload;
+        })
+        .addCase(ActionType.DROP_ACTIVE_ARTICLE, (state, action) => {
+            state.activeArticleId = null;
+        })
+        .addCase(ActionType.CHANGE_REFRESH_STATUS, (state, action) => {
+            state.refreshStatus = action.payload;
+        })
+        .addDefaultCase((state, action) => {
+            Object.assign(state, initialState);
+        })
+});
 
-        case ActionType.GET_ARTICLE_COMMENTS:
-            return Object.assign({}, state, {
-                articleComments: action.payload
-            });
-
-        case ActionType.CHANGE_COMMENTS_LOADING_STATUS:
-            return Object.assign({}, state, {
-                isCommentLoaded: action.payload
-            });
-
-        case ActionType.GET_ACTIVE_ARTICLE:
-            return Object.assign({}, state, {
-                activeArticle: action.payload
-            });
-
-        case ActionType.CHANGE_ACTIVE_ARTICLE_LOADING_STATUS:
-            return Object.assign({}, state, {
-                isActiveArticleLoaded: action.payload
-            });
-
-        case ActionType.DROP_ACTIVE_ARTICLE:
-            return Object.assign({}, state, {
-                activeArticle: null
-            });
-
-        case ActionType.CHANGE_REFRESH_STATUS:
-            return Object.assign({}, state, {
-                refreshStatus: action.payload
-            });
-        default:
-            break;
-    }
-
-    return state;
-};
+// const reducer = (state = initialState, action) => {
+//     switch (action.type) {
+//         case ActionType.CHANGE_LOADING_STATUS:
+//             return Object.assign({}, state, {
+//                 isDataLoaded: action.payload
+//             });
+//
+//         case ActionType.GET_ARTICLES:
+//             return Object.assign({}, state, {
+//                 articles: action.payload
+//             });
+//
+//         case ActionType.CHANGE_ACTIVE_ARTICLE_ID:
+//             return Object.assign({}, state, {
+//                 activeArticleId: action.payload
+//             });
+//
+//         case ActionType.GET_ARTICLE_COMMENTS:
+//             return Object.assign({}, state, {
+//                 articleComments: action.payload
+//             });
+//
+//         case ActionType.CHANGE_COMMENTS_LOADING_STATUS:
+//             return Object.assign({}, state, {
+//                 isCommentLoaded: action.payload
+//             });
+//
+//         case ActionType.GET_ACTIVE_ARTICLE:
+//             return Object.assign({}, state, {
+//                 activeArticle: action.payload
+//             });
+//
+//         case ActionType.CHANGE_ACTIVE_ARTICLE_LOADING_STATUS:
+//             return Object.assign({}, state, {
+//                 isActiveArticleLoaded: action.payload
+//             });
+//
+//         case ActionType.DROP_ACTIVE_ARTICLE:
+//             return Object.assign({}, state, {
+//                 activeArticle: null
+//             });
+//
+//         case ActionType.CHANGE_REFRESH_STATUS:
+//             return Object.assign({}, state, {
+//                 refreshStatus: action.payload
+//             });
+//         default:
+//             return state;
+//     }
+// };
 
 export {reducer, Operation};

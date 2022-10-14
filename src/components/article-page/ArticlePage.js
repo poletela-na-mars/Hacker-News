@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import DOMPurify from 'dompurify';
 import "./ArticlePage.css";
 
 import Header from "../header/Header";
@@ -42,7 +43,7 @@ const ArticlePage = (props) => {
                                    className="article-title">{activeArticle.title}</a></h1>
                         </div>
                         {activeArticle.text ? <p className="optional-text"
-                                                 dangerouslySetInnerHTML={{__html: activeArticle.text}}>
+                                                 dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(activeArticle.text)}}>
                         </p> : ""}
                         <div className="article-info shadow-form">
                             {activeArticle.url ?

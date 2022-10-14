@@ -9,14 +9,14 @@ import {Operation} from "../../reducer/reducer";
 import { v4 as uuidv4 } from 'uuid';
 
 const Comments = (props) => {
-    const {articleComments, activeArticle, isCommentLoaded,
-        getActiveArticle, changeRefreshStatus, changeCommentsLoadingStatus} = props;
+    // const {articleComments, activeArticle, isCommentLoaded,
+    //     getActiveArticle, changeRefreshStatus, changeCommentsLoadingStatus} = props;
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
-            changeRefreshStatus(true);
-            changeCommentsLoadingStatus(false);
-            getActiveArticle(activeArticle.id);
+            props.changeRefreshStatus(true);
+            props.changeCommentsLoadingStatus(false);
+            props.getActiveArticle(props.activeArticle.id);
         }, 60000);
 
         return () => {
@@ -30,7 +30,7 @@ const Comments = (props) => {
 
     return (
         <div className="comment-block">
-            {isCommentLoaded ? getCommentsElements(articleComments) : null}
+            {props.isCommentLoaded ? getCommentsElements(props.articleComments) : null}
         </div>
     );
 };

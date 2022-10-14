@@ -23,11 +23,11 @@ const fixDate = (date) => {
     return day + ' ' + month + ' ' + year + ', ' + hours + ':' + minutes.slice(-2);
 }
 
-const createMarkup = (data) => {
-    return {__html: data};
-};
+// const createMarkup = (data) => {
+//     return {__html: data};
+// };
 
 export {
     fixDate,
-    createMarkup
+    // createMarkup
 };
