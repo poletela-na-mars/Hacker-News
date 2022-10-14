@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import DOMPurify from 'dompurify';
 
 import {fixDate, createMarkup} from "../../utils";
 
@@ -32,7 +33,7 @@ const Comment = (props) => {
                     {/*</div>*/}
                 </div>
                 <div className="comment-info">
-                    <p className="comment-item-text" dangerouslySetInnerHTML={createMarkup(comment.text)}></p>
+                    <p className="comment-item-text" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(comment.text)}}></p>
                 </div>
             </div>
         );
