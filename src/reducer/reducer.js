@@ -26,11 +26,10 @@ const Operation = {
     }
 };
 
-//TODO: -axios
+//TODO:
 //      -change Operation
 //      -delete props. in Comments
 //      -configureStore in index.js
-//      -error-page
 
 const reducer = createReducer(initialState, (builder) => {
     builder

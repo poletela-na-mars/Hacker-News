@@ -10,7 +10,7 @@ const Header = (props) => {
     const {
         changeActiveArticleLoadingStatus, dropActiveArticle,
         getArticles, changeCommentsLoadingStatus, activeArticleId, getActiveArticle,
-        isCommentLoaded, refreshStatus, changeRefreshStatus, page
+        isCommentLoaded, refreshStatus, changeRefreshStatus, page, minimum
     } = props;
     const [refreshButtonToggled, setRefreshButtonToggleStatus] = useState(false);
 
@@ -20,25 +20,29 @@ const Header = (props) => {
     }, 3000);
 
     const renderHeaderControls = () => {
-        if (page === `MAIN_PAGE`) {
-            return (
-                <div className="update_img"
-                     onClick={() => {
-                         setRefreshButtonToggleStatus(true);
-                         getArticles();
-                     }}/>
-            );
-        } else {
-            return (
-                <div>
+        if (!minimum) {
+            if (page === `MAIN_PAGE`) {
+                return (
                     <div className="update_img"
                          onClick={() => {
                              setRefreshButtonToggleStatus(true);
-                             changeCommentsLoadingStatus(false);
-                             getActiveArticle(activeArticleId);
+                             getArticles();
                          }}/>
-                </div>
-            );
+                );
+            } else if (page === 'ARTICLE_PAGE') {
+                return (
+                    <div>
+                        <div className="update_img"
+                             onClick={() => {
+                                 setRefreshButtonToggleStatus(true);
+                                 changeCommentsLoadingStatus(false);
+                                 getActiveArticle(activeArticleId);
+                             }}/>
+                    </div>
+                );
+            }
+        } else {
+            return null;
         }
     };
 

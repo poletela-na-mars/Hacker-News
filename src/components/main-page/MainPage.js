@@ -48,7 +48,7 @@ const MainPage = (props) => {
     if (isDataLoaded) {
         return (
             <div className="block">
-                <Header page={`MAIN_PAGE`}/>
+                <Header page={`MAIN_PAGE`} minimum={false}/>
                 <ul className="list">
                     {getListArticles(articles)}
                 </ul>
