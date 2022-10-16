@@ -623,12 +623,12 @@ template {
     /*border-radius: 15px;*/
 }
 
-.comment-show-more-button {
-    width: 120px;
-    height: 40px;
+.blue-button {
+    /*width: 120px;*/
+    /*height: 40px;*/
     align-self: center;
 
-    font-size: 14px;
+    /*font-size: 14px;*/
     font-family: "Exo 2 Light";
 
     color: #fff;
@@ -645,6 +645,28 @@ template {
     transition: all 1000ms ease;
 }
 
+.comment-show-more-button {
+    width: 120px;
+    height: 40px;
+    /*align-self: center;*/
+
+    font-size: 14px;
+    /*font-family: "Exo 2 Light";*/
+
+    /*color: #fff;*/
+    /*background-color: #3940d7;*/
+
+    /*border-radius: 20px;*/
+
+    /*border: none;*/
+    /*position: relative;*/
+    /*box-sizing: border-box;*/
+
+    /*margin-top: 20px;*/
+
+    /*transition: all 1000ms ease;*/
+}
+
 /*.comment-show-more-button:hover {*/
 /*    color: black;*/
 
@@ -655,7 +677,7 @@ template {
 /*    background-color: white;*/
 /*}*/
 
-.comment-show-more-button:before {
+.blue-button:before {
     content:'';
     position: absolute;
     top: 0;
@@ -667,7 +689,7 @@ template {
     transition: all 2s ease;
 }
 
-.comment-show-more-button:hover:before {
+.blue-button:hover:before {
     width: 100%;
 }
 

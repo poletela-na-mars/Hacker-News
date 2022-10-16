@@ -25,12 +25,11 @@ const ArticlePage = (props) => {
 
     if (isActiveArticleLoaded) {
         changeActiveArticleId(activeArticle.id);
-
         return (
             <div className="block">
                 <Header page={`ARTICLE_PAGE`}/>
                 <div className="main-part">
-                    <div className="about-article">
+                    (  {isActiveArticleLoaded} <div className="about-article">
                         <div className="article-panel">
                             <Link to={`/`} onClick={() => {
                                 dropActiveArticle();
@@ -60,7 +59,7 @@ const ArticlePage = (props) => {
                             <p>{activeArticle.descendants ? (activeArticle.descendants === 1 ? `1 comment` : `${activeArticle.descendants} comments`) : `0 comments`}</p>
                         </div>
                     </div>
-                    <Comments/>
+                    <Comments/>)
                 </div>
                 <Footer/>
                 <ScrollTop/>

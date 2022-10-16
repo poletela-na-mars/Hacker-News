@@ -13,7 +13,7 @@ const Comment = (props) => {
 
         if ((!isButtonPressed) && (comment.hasOwnProperty(`kids`))) {
             return (
-                <button className="comment-show-more-button" type="button" onClick={() => {
+                <button className="blue-button comment-show-more-button" type="button" onClick={() => {
                     setKidsCommentsParentId(id);
                     setIsButtonPressed(true);
                 }}>show more</button>

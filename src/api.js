@@ -6,15 +6,34 @@ const api = axios.create({
 });
 
 const getItemUrl = (it) => `item/${it}.json?print=pretty`;
+const catchErrorInAxios = (error) => {
+    if (error.response) {
+        // Запрос был сделан, и сервер ответил кодом состояния, который
+        // выходит за пределы 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    } else if (error.request) {
+        // Запрос был сделан, но ответ не получен
+        // `error.request`- это экземпляр XMLHttpRequest в браузере и экземпляр
+        // http.ClientRequest в node.js
+        console.log(error.request);
+    } else {
+        // Произошло что-то при настройке запроса, вызвавшее ошибку
+        console.log('Error', error.message);
+    }
+    console.log(error.config);
+};
 
 const getArticles = async () => {
-    const newIds = await api.get(`newstories.json?print=pretty`).then(response => response.data.slice(0, 100));
-    const idsBodies = await Promise.all(newIds.map((it) => api.get(getItemUrl(it))));
+    const newIds = await api.get(`newstories.json?print=pretty`).then(response => response.data.slice(0, 100),
+        error => catchErrorInAxios(error));
+    const idsBodies = await Promise.all(newIds.map((it) => api.get(getItemUrl(it)))).catch(error => catchErrorInAxios(error));
     return idsBodies.map((it) => it.data);
 };
 
 const getArticle = async (id) => {
-    return await api.get(getItemUrl(id)).then(response => response.data);
+    return await api.get(getItemUrl(id)).then(response => response.data, error => catchErrorInAxios(error));
 };
 
 const getComments = async (ids) => {
@@ -43,7 +62,7 @@ const addNestedChildren = async (comment) => {
     if (result.hasOwnProperty(`kids`)) {
         const kids = result.kids;
         const sub = [];
-        
+
         for (const it of kids) {
             const comment = await getArticle(it);
             const newComment = await addNestedChildren(comment);
@@ -51,7 +70,7 @@ const addNestedChildren = async (comment) => {
         }
         result.kids = sub;
     }
-        return result;
+    return result;
 };
 
 export {
