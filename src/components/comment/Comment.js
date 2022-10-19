@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import DOMPurify from 'dompurify';
 
-import {fixDate, createMarkup} from "../../utils";
+import {fixDate} from "../../utils";
 
 const Comment = (props) => {
     const {comment} = props;
     const [isButtonPressed, setIsButtonPressed] = useState(false);
     const [kidsCommentsParentId, setKidsCommentsParentId] = useState(-1);
 
-    const getButtonElement = (comment) => {
+    const getButton = (comment) => {
         const id = comment.id;
 
         if ((!isButtonPressed) && (comment.hasOwnProperty(`kids`))) {
@@ -24,16 +24,15 @@ const Comment = (props) => {
     const getCommentBlock = (comment) => {
         return (
             <div className="comment-parent-block">
-                {/*<div className="comment-title">*/}
                 <div className="comment-title-container">
                     <p className="comment-item author"><span
                         className="blue-words">Author:</span>&ensp;{comment.by}&ensp;</p>
                     <p className="comment-item"><span
                         className="blue-words">Date:</span>&ensp;{fixDate(comment.time)}</p>
-                    {/*</div>*/}
                 </div>
                 <div className="comment-info">
-                    <p className="comment-item-text" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(comment.text)}}></p>
+                    <p className="comment-item-text"
+                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(comment.text)}}></p>
                 </div>
             </div>
         );
@@ -61,18 +60,18 @@ const Comment = (props) => {
         }
     };
 
-    const getParentCommentElement = (comment) => {
+    const getCommentElement = (comment) => {
         return (
             <div className="comment-item-block shadow-form">
                 {getCommentBlock(comment)}
-                {getButtonElement(comment)}
+                {getButton(comment)}
                 {getNestedCommentElement(comment.id)}
             </div>
         );
     };
 
     if ((!comment.hasOwnProperty(`deleted`)) && (!comment.hasOwnProperty(`dead`))) {
-        return getParentCommentElement(comment);
+        return getCommentElement(comment);
     }
 };
 

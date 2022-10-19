@@ -1,12 +1,11 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
+import { v4 as uuidv4 } from 'uuid';
 
 import Comment from "../comment/Comment";
 
 import {ActionCreator} from "../../reducer/action-creator";
-import {Operation} from "../../reducer/reducer";
-
-import { v4 as uuidv4 } from 'uuid';
+import {AsyncOperation} from "../../reducer/reducer";
 
 const Comments = (props) => {
     const {articleComments, activeArticle, isCommentLoaded,
@@ -43,7 +42,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getActiveArticle: (id) => {
-        dispatch(Operation.getActiveArticle(id));
+        dispatch(AsyncOperation.getActiveArticle(id));
     },
     changeRefreshStatus: (status) => {
         dispatch(ActionCreator.changeRefreshStatus(status));
@@ -53,5 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-// export {Comments};
 export default connect(mapStateToProps, mapDispatchToProps)(Comments);

@@ -1,18 +1,19 @@
 import React from "react";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 import DOMPurify from 'dompurify';
+
 import "./ArticlePage.css";
 
 import Header from "../header/Header";
 import Loader from "../loader/Loader";
 import Comments from "../comments/Comments";
 import ErrorPage from "../error-page/ErrorPage";
+import ScrollTop from "../scroll-top/ScrollTop";
+import Footer from "../footer/Footer";
 
 import {fixDate} from "../../utils";
 import {ActionCreator} from "../../reducer/action-creator";
-import ScrollTop from "../scroll-top/ScrollTop";
-import Footer from "../footer/Footer";
-import {Link} from "react-router-dom";
 
 const ArticlePage = (props) => {
     const {
@@ -56,7 +57,8 @@ const ArticlePage = (props) => {
                             </div>
                         </div>
                         <div className="comments-counter-container">
-                            <p>{activeArticle.descendants ? (activeArticle.descendants === 1 ? `1 comment` : `${activeArticle.descendants} comments`) : `0 comments`}</p>
+                            <p>{activeArticle.descendants ? (activeArticle.descendants === 1 ? `1 comment` :
+                                `${activeArticle.descendants} comments`) : `0 comments`}</p>
                         </div>
                     </div>
                     <Comments/>
@@ -80,8 +82,7 @@ const ArticlePage = (props) => {
 
 const mapStateToProps = (state) => ({
     activeArticle: state.activeArticle,
-    isActiveArticleLoaded: state.isActiveArticleLoaded,
-
+    isActiveArticleLoaded: state.isActiveArticleLoaded
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -96,5 +97,4 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-export {ArticlePage};
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);

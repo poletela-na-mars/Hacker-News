@@ -1,6 +1,6 @@
 footer {
     height: 80px;
-    font-family: "Exo 2 Light";
+    font-family: "Exo 2 Light", sans-serif;
     background-color: #3940d7;
     color: white;
     display: flex;

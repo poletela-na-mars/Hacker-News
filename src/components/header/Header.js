@@ -1,16 +1,18 @@
 import React, {useState} from "react";
-import "./Header.css";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
+import "./Header.css";
+
 import {ActionCreator} from "../../reducer/action-creator";
-import {Operation} from "../../reducer/reducer";
+import {AsyncOperation} from "../../reducer/reducer";
 
 const Header = (props) => {
     const {
         changeActiveArticleLoadingStatus, dropActiveArticle,
-        getArticles, changeCommentsLoadingStatus, activeArticleId, getActiveArticle,
-        isCommentLoaded, refreshStatus, changeRefreshStatus, page, minimum
+        getArticles, changeCommentsLoadingStatus,
+        getActiveArticle, changeRefreshStatus, page, minimum,
+        activeArticleId, isCommentLoaded, refreshStatus,
     } = props;
     const [refreshButtonToggled, setRefreshButtonToggleStatus] = useState(false);
 
@@ -23,21 +25,23 @@ const Header = (props) => {
         if (!minimum) {
             if (page === `MAIN_PAGE`) {
                 return (
-                    <div className="update_img"
-                         onClick={() => {
-                             setRefreshButtonToggleStatus(true);
-                             getArticles();
-                         }}/>
+                    <div
+                        className={`update-img${(refreshButtonToggled || refreshStatus) ? ` update-img-animation` : ``}`}
+                        onClick={() => {
+                            setRefreshButtonToggleStatus(true);
+                            getArticles();
+                        }}/>
                 );
             } else if (page === 'ARTICLE_PAGE') {
                 return (
                     <div>
-                        <div className="update_img"
-                             onClick={() => {
-                                 setRefreshButtonToggleStatus(true);
-                                 changeCommentsLoadingStatus(false);
-                                 getActiveArticle(activeArticleId);
-                             }}/>
+                        <div
+                            className={`update-img${((refreshButtonToggled && !isCommentLoaded) || refreshStatus) ? ` update-img-animation` : ``}`}
+                            onClick={() => {
+                                setRefreshButtonToggleStatus(true);
+                                changeCommentsLoadingStatus(false);
+                                getActiveArticle(activeArticleId);
+                            }}/>
                     </div>
                 );
             }
@@ -75,13 +79,13 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(ActionCreator.dropActiveArticle());
     },
     getArticles: () => {
-        dispatch(Operation.getArticles());
+        dispatch(AsyncOperation.getArticles());
     },
     changeCommentsLoadingStatus: (status) => {
         dispatch(ActionCreator.changeCommentsLoadingStatus(status));
     },
     getActiveArticle: (articleId) => {
-        dispatch(Operation.getActiveArticle(articleId));
+        dispatch(AsyncOperation.getActiveArticle(articleId));
     },
     changeRefreshStatus: (status) => {
         dispatch(ActionCreator.changeRefreshStatus(status));

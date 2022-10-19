@@ -24,42 +24,4 @@ const ActionCreator = {
     changeRefreshStatus: createAction(ActionType.CHANGE_REFRESH_STATUS, payload => ({payload})),
 };
 
-// const ActionCreator = {
-//     getArticles: (articles) => ({
-//         type: ActionType.GET_ARTICLES,
-//         payload: articles
-//     }),
-//     changeLoadingStatus: (status) => ({
-//         type: ActionType.CHANGE_LOADING_STATUS,
-//         payload: status
-//     }),
-//     changeActiveArticleId: (id) => ({
-//         type: ActionType.CHANGE_ACTIVE_ARTICLE_ID,
-//         payload: id
-//     }),
-//     getArticleComments: (comments) => ({
-//         type: ActionType.GET_ARTICLE_COMMENTS,
-//         payload: comments
-//     }),
-//     changeCommentsLoadingStatus: (status) => ({
-//         type: ActionType.CHANGE_COMMENTS_LOADING_STATUS,
-//         payload: status
-//     }),
-//     getActiveArticle: (article) => ({
-//         type: ActionType.GET_ACTIVE_ARTICLE,
-//         payload: article
-//     }),
-//     changeActiveArticleLoadingStatus: (status) => ({
-//         type: ActionType.CHANGE_ACTIVE_ARTICLE_LOADING_STATUS,
-//         payload: status
-//     }),
-//     dropActiveArticle: () => ({
-//         type: ActionType.DROP_ACTIVE_ARTICLE
-//     }),
-//     changeRefreshStatus: (status) => ({
-//         type: ActionType.CHANGE_REFRESH_STATUS,
-//         payload: status
-//     })
-// };
-
 export {ActionCreator, ActionType};

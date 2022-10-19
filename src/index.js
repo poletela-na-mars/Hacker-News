@@ -13,11 +13,6 @@ import {api} from "./api";
 import {BrowserRouter} from "react-router-dom";
 import history from "./history";
 
-// const store = createStore(reducer, compose(
-//     applyMiddleware(thunk.withExtraArgument(api)),
-//     window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f)
-// );
-
 const store = configureStore({
     reducer,
     middleware: getDefaultMiddleware =>
@@ -25,7 +20,8 @@ const store = configureStore({
             thunk: {
                 extraArgument: { api }
             }
-        })
+        }),
+    devTools: true
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

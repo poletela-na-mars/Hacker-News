@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 
 import MainPage from "./components/main-page/MainPage";
 import ArticlePage from "./components/article-page/ArticlePage";
-import {Operation} from "./reducer/reducer";
+
+import {AsyncOperation} from "./reducer/reducer";
 
 const App = (props) => {
     const {getActiveArticle, getArticles} = props;
@@ -28,10 +29,10 @@ const App = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     getActiveArticle: (articleId) => {
-        dispatch(Operation.getActiveArticle(articleId));
+        dispatch(AsyncOperation.getActiveArticle(articleId));
     },
     getArticles: () => {
-        dispatch(Operation.getArticles());
+        dispatch(AsyncOperation.getArticles());
     }
 });
 

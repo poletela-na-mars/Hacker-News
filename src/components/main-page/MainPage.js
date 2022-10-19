@@ -4,15 +4,18 @@ import {connect} from "react-redux";
 
 import Header from "../header/Header";
 import Loader from "../loader/Loader";
-
-import {fixDate} from "../../utils";
-import {Operation} from "../../reducer/reducer";
-import {ActionCreator} from "../../reducer/action-creator";
 import ScrollTop from "../scroll-top/ScrollTop";
 import Footer from "../footer/Footer";
 
+import {fixDate} from "../../utils";
+import {AsyncOperation} from "../../reducer/reducer";
+import {ActionCreator} from "../../reducer/action-creator";
+
 const MainPage = (props) => {
-    const {articles, isDataLoaded, getArticles, changeRefreshStatus} = props;
+    const {
+        articles, isDataLoaded,
+        getArticles, changeRefreshStatus
+    } = props;
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
@@ -25,7 +28,7 @@ const MainPage = (props) => {
         };
     });
 
-    const getListArticles = (articles) => {
+    const getArticlesList = (articles) => {
         return articles.filter(it => it !== null).map((it) => {
             const date = fixDate(it.time);
 
@@ -50,7 +53,7 @@ const MainPage = (props) => {
             <div className="block">
                 <Header page={`MAIN_PAGE`} minimum={false}/>
                 <ul className="list">
-                    {getListArticles(articles)}
+                    {getArticlesList(articles)}
                 </ul>
                 <ScrollTop/>
                 <Footer/>
@@ -74,7 +77,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getArticles: () => {
-        dispatch(Operation.getArticles());
+        dispatch(AsyncOperation.getArticles());
     },
     changeRefreshStatus: (status) => {
         dispatch(ActionCreator.changeRefreshStatus(status));
