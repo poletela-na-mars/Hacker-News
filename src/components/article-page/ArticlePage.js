@@ -43,11 +43,12 @@ const ArticlePage = (props) => {
                                    className="article-title">{currentArticle.title}</a></h1>
                         </div>
                         {currentArticle.text ? <p className="optional-text"
-                                                 dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(currentArticle.text)}}>
+                                                  dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(currentArticle.text)}}>
                         </p> : ""}
                         <div className="article-info shadow-form">
                             {currentArticle.url ?
-                                <a target="_blank" href={currentArticle.url} className="read-button"></a> :
+                                <a target="_blank" href={currentArticle.url} className="read-button"
+                                   rel="noreferrer">Читать</a> :
                                 <div className="read-button-grey"/>}
                             <div className="article-date"><span
                                 className="blue-words">Date:</span>&ensp;{fixDate(currentArticle.time)}

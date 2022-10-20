@@ -92,6 +92,10 @@
     background-image: url("../../img/read.png");
     background-position: center;
     background-size: cover;
+
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .read-button-grey {
