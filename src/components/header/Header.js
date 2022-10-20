@@ -9,16 +9,16 @@ import {AsyncOperation} from "../../reducer/reducer";
 
 const Header = (props) => {
     const {
-        changeActiveArticleLoadingStatus, dropActiveArticle,
+        changeCurrentArticleLoadingStatus, dropCurrentArticle,
         getArticles, changeCommentsLoadingStatus,
-        getActiveArticle, changeRefreshStatus, page, minimum,
-        activeArticleId, isCommentLoaded, refreshStatus,
+        getCurrentArticle, changeUpdateStatus, page, minimum,
+        currentArticleId, isEachCommentLoaded, updateStatus,
     } = props;
-    const [refreshButtonToggled, setRefreshButtonToggleStatus] = useState(false);
+    const [updateButtonToggled, setUpdateButtonToggleStatus] = useState(false);
 
     setTimeout(() => {
-        setRefreshButtonToggleStatus(false);
-        changeRefreshStatus(false);
+        setUpdateButtonToggleStatus(false);
+        changeUpdateStatus(false);
     }, 3000);
 
     const renderHeaderControls = () => {
@@ -26,9 +26,9 @@ const Header = (props) => {
             if (page === `MAIN_PAGE`) {
                 return (
                     <div
-                        className={`update-img${(refreshButtonToggled || refreshStatus) ? ` update-img-animation` : ``}`}
+                        className={`update-img${(updateButtonToggled || updateStatus) ? ` update-img-animation` : ``}`}
                         onClick={() => {
-                            setRefreshButtonToggleStatus(true);
+                            setUpdateButtonToggleStatus(true);
                             getArticles();
                         }}/>
                 );
@@ -36,11 +36,11 @@ const Header = (props) => {
                 return (
                     <div>
                         <div
-                            className={`update-img${((refreshButtonToggled && !isCommentLoaded) || refreshStatus) ? ` update-img-animation` : ``}`}
+                            className={`update-img${((updateButtonToggled && !isEachCommentLoaded) || updateStatus) ? ` update-img-animation` : ``}`}
                             onClick={() => {
-                                setRefreshButtonToggleStatus(true);
+                                setUpdateButtonToggleStatus(true);
                                 changeCommentsLoadingStatus(false);
-                                getActiveArticle(activeArticleId);
+                                getCurrentArticle(currentArticleId);
                             }}/>
                     </div>
                 );
@@ -54,8 +54,8 @@ const Header = (props) => {
         <>
             <header>
                 <Link style={{textDecoration: 'none', color: 'inherit'}} to={`/`} onClick={() => {
-                    dropActiveArticle();
-                    changeActiveArticleLoadingStatus(false);
+                    dropCurrentArticle();
+                    changeCurrentArticleLoadingStatus(false);
                 }}>
                     <h1 className="header-h1">Hacker News</h1>
                 </Link>
@@ -66,17 +66,17 @@ const Header = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    activeArticleId: state.activeArticleId,
-    isCommentLoaded: state.isCommentLoaded,
-    refreshStatus: state.refreshStatus
+    currentArticleId: state.currentArticleId,
+    isEachCommentLoaded: state.isEachCommentLoaded,
+    updateStatus: state.updateStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    changeActiveArticleLoadingStatus: (status) => {
-        dispatch(ActionCreator.changeActiveArticleLoadingStatus(status));
+    changeCurrentArticleLoadingStatus: (status) => {
+        dispatch(ActionCreator.changeCurrentArticleLoadingStatus(status));
     },
-    dropActiveArticle: () => {
-        dispatch(ActionCreator.dropActiveArticle());
+    dropCurrentArticle: () => {
+        dispatch(ActionCreator.dropCurrentArticle());
     },
     getArticles: () => {
         dispatch(AsyncOperation.getArticles());
@@ -84,11 +84,11 @@ const mapDispatchToProps = (dispatch) => ({
     changeCommentsLoadingStatus: (status) => {
         dispatch(ActionCreator.changeCommentsLoadingStatus(status));
     },
-    getActiveArticle: (articleId) => {
-        dispatch(AsyncOperation.getActiveArticle(articleId));
+    getCurrentArticle: (articleId) => {
+        dispatch(AsyncOperation.getCurrentArticle(articleId));
     },
-    changeRefreshStatus: (status) => {
-        dispatch(ActionCreator.changeRefreshStatus(status));
+    changeUpdateStatus: (status) => {
+        dispatch(ActionCreator.changeUpdateStatus(status));
     }
 });
 

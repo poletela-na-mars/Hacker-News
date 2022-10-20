@@ -13,13 +13,13 @@ import {ActionCreator} from "../../reducer/action-creator";
 
 const MainPage = (props) => {
     const {
-        articles, isDataLoaded,
-        getArticles, changeRefreshStatus
+        articles, isEachArticleLoaded,
+        getArticles, changeUpdateStatus
     } = props;
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
-            changeRefreshStatus(true);
+            changeUpdateStatus(true);
             getArticles();
         }, 60000);
 
@@ -48,7 +48,7 @@ const MainPage = (props) => {
         });
     };
 
-    if (isDataLoaded) {
+    if (isEachArticleLoaded) {
         return (
             <div className="block">
                 <Header page={`MAIN_PAGE`} minimum={false}/>
@@ -72,15 +72,15 @@ const MainPage = (props) => {
 
 const mapStateToProps = (state) => ({
     articles: state.articles,
-    isDataLoaded: state.isDataLoaded
+    isEachArticleLoaded: state.isEachArticleLoaded
 });
 
 const mapDispatchToProps = (dispatch) => ({
     getArticles: () => {
         dispatch(AsyncOperation.getArticles());
     },
-    changeRefreshStatus: (status) => {
-        dispatch(ActionCreator.changeRefreshStatus(status));
+    changeUpdateStatus: (status) => {
+        dispatch(ActionCreator.changeUpdateStatus(status));
     }
 });
 

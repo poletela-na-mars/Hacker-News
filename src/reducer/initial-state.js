@@ -1,12 +1,12 @@
 const initialState = {
     articles: [],
-    activeArticle: null,
+    currentArticle: null,
     articleComments: [],
-    isDataLoaded: false,
-    isCommentLoaded: false,
-    isActiveArticleLoaded: false,
-    activeArticleId: -1,
-    refreshStatus: false
+    isEachArticleLoaded: false,
+    isEachCommentLoaded: false,
+    isCurrentArticleLoaded: false,
+    currentArticleId: -1,
+    updateStatus: false
 };
 
 export default initialState;

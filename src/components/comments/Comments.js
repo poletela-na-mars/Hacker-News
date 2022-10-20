@@ -8,14 +8,14 @@ import {ActionCreator} from "../../reducer/action-creator";
 import {AsyncOperation} from "../../reducer/reducer";
 
 const Comments = (props) => {
-    const {articleComments, activeArticle, isCommentLoaded,
-        getActiveArticle, changeRefreshStatus, changeCommentsLoadingStatus} = props;
+    const {articleComments, currentArticle, isEachCommentLoaded,
+        getCurrentArticle, changeUpdateStatus, changeCommentsLoadingStatus} = props;
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
-            changeRefreshStatus(true);
+            changeUpdateStatus(true);
             changeCommentsLoadingStatus(false);
-            getActiveArticle(activeArticle.id);
+            getCurrentArticle(currentArticle.id);
         }, 60000);
 
         return () => {
@@ -29,23 +29,23 @@ const Comments = (props) => {
 
     return (
         <div className="comment-block">
-            {isCommentLoaded ? getCommentsElements(articleComments) : null}
+            {isEachCommentLoaded ? getCommentsElements(articleComments) : null}
         </div>
     );
 };
 
 const mapStateToProps = (state) => ({
     articleComments: state.articleComments,
-    isCommentLoaded: state.isCommentLoaded,
-    activeArticle: state.activeArticle
+    isEachCommentLoaded: state.isEachCommentLoaded,
+    currentArticle: state.currentArticle
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getActiveArticle: (id) => {
-        dispatch(AsyncOperation.getActiveArticle(id));
+    getCurrentArticle: (id) => {
+        dispatch(AsyncOperation.getCurrentArticle(id));
     },
-    changeRefreshStatus: (status) => {
-        dispatch(ActionCreator.changeRefreshStatus(status));
+    changeUpdateStatus: (status) => {
+        dispatch(ActionCreator.changeUpdateStatus(status));
     },
     changeCommentsLoadingStatus: (status) => {
         dispatch(ActionCreator.changeCommentsLoadingStatus(status));

@@ -17,15 +17,15 @@ import {ActionCreator} from "../../reducer/action-creator";
 
 const ArticlePage = (props) => {
     const {
-        activeArticle,
-        isActiveArticleLoaded,
-        changeActiveArticleId,
-        changeActiveArticleLoadingStatus,
-        dropActiveArticle
+        currentArticle,
+        isCurrentArticleLoaded,
+        changeCurrentArticleId,
+        changeCurrentArticleLoadingStatus,
+        dropCurrentArticle
     } = props;
 
-    if (isActiveArticleLoaded) {
-        changeActiveArticleId(activeArticle.id);
+    if (isCurrentArticleLoaded) {
+        changeCurrentArticleId(currentArticle.id);
         return (
             <div className="block">
                 <Header page={`ARTICLE_PAGE`} minimum={false}/>
@@ -33,32 +33,32 @@ const ArticlePage = (props) => {
                     <div className="about-article">
                         <div className="article-panel">
                             <Link to={`/`} onClick={() => {
-                                dropActiveArticle();
-                                changeActiveArticleLoadingStatus(false);
+                                dropCurrentArticle();
+                                changeCurrentArticleLoadingStatus(false);
                             }}>
                                 <div className="go-back-button"/>
                             </Link>
-                            <h1><a target="_blank" href={activeArticle.url}
-                                   style={activeArticle.url ? {} : {color: "black"}}
-                                   className="article-title">{activeArticle.title}</a></h1>
+                            <h1><a target="_blank" href={currentArticle.url}
+                                   style={currentArticle.url ? {} : {color: "black"}}
+                                   className="article-title">{currentArticle.title}</a></h1>
                         </div>
-                        {activeArticle.text ? <p className="optional-text"
-                                                 dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(activeArticle.text)}}>
+                        {currentArticle.text ? <p className="optional-text"
+                                                 dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(currentArticle.text)}}>
                         </p> : ""}
                         <div className="article-info shadow-form">
-                            {activeArticle.url ?
-                                <a target="_blank" href={activeArticle.url} className="read-button"></a> :
+                            {currentArticle.url ?
+                                <a target="_blank" href={currentArticle.url} className="read-button"></a> :
                                 <div className="read-button-grey"/>}
                             <div className="article-date"><span
-                                className="blue-words">Date:</span>&ensp;{fixDate(activeArticle.time)}
+                                className="blue-words">Date:</span>&ensp;{fixDate(currentArticle.time)}
                             </div>
                             <div className="article-author"><span
-                                className="blue-words">Author:</span>&ensp;{activeArticle.by}
+                                className="blue-words">Author:</span>&ensp;{currentArticle.by}
                             </div>
                         </div>
                         <div className="comments-counter-container">
-                            <p>{activeArticle.descendants ? (activeArticle.descendants === 1 ? `1 comment` :
-                                `${activeArticle.descendants} comments`) : `0 comments`}</p>
+                            <p>{currentArticle.descendants ? (currentArticle.descendants === 1 ? `1 comment` :
+                                `${currentArticle.descendants} comments`) : `0 comments`}</p>
                         </div>
                     </div>
                     <Comments/>
@@ -67,7 +67,7 @@ const ArticlePage = (props) => {
                 <ScrollTop/>
             </div>
         );
-    } else if (activeArticle === -1) {
+    } else if (currentArticle === -1) {
         return <ErrorPage/>;
     } else {
         return (
@@ -81,19 +81,19 @@ const ArticlePage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    activeArticle: state.activeArticle,
-    isActiveArticleLoaded: state.isActiveArticleLoaded
+    currentArticle: state.currentArticle,
+    isCurrentArticleLoaded: state.isCurrentArticleLoaded
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    changeActiveArticleLoadingStatus: (status) => {
-        dispatch(ActionCreator.changeActiveArticleLoadingStatus(status));
+    changeCurrentArticleLoadingStatus: (status) => {
+        dispatch(ActionCreator.changeCurrentArticleLoadingStatus(status));
     },
-    dropActiveArticle: () => {
-        dispatch(ActionCreator.dropActiveArticle());
+    dropCurrentArticle: () => {
+        dispatch(ActionCreator.dropCurrentArticle());
     },
-    changeActiveArticleId: (articleId) => {
-        dispatch(ActionCreator.changeActiveArticleId(articleId));
+    changeCurrentArticleId: (articleId) => {
+        dispatch(ActionCreator.changeCurrentArticleId(articleId));
     }
 });
 

@@ -8,14 +8,14 @@ import ArticlePage from "./components/article-page/ArticlePage";
 import {AsyncOperation} from "./reducer/reducer";
 
 const App = (props) => {
-    const {getActiveArticle, getArticles} = props;
+    const {getCurrentArticle, getArticles} = props;
     const LoadingArticles = () => {
         getArticles();
         return <MainPage/>;
     };
 
     const LoadingArticle = () => {
-        getActiveArticle(window.location.pathname.slice(1));
+        getCurrentArticle(window.location.pathname.slice(1));
         return <ArticlePage/>
     };
 
@@ -28,8 +28,8 @@ const App = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getActiveArticle: (articleId) => {
-        dispatch(AsyncOperation.getActiveArticle(articleId));
+    getCurrentArticle: (articleId) => {
+        dispatch(AsyncOperation.getCurrentArticle(articleId));
     },
     getArticles: () => {
         dispatch(AsyncOperation.getArticles());
