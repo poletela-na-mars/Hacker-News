@@ -1,5 +1,4 @@
 # Hacker-News
-Interface for [Hacker News](https://news.ycombinator.com/) with React, React-Redux
+Interface for [Hacker News](https://news.ycombinator.com/) with React, Redux, React Router v6
 
-https://user-images.githubusercontent.com/70761083/184735872-332154d7-ee0b-4f67-9f10-c66f190ce500.mp4
-
+[Hacker-News.webm](https://user-images.githubusercontent.com/70761083/197209723-3e605852-0eb7-4601-82a5-7afdd5f3c0e2.webm)
