@@ -1,29 +1,31 @@
 import React from "react";
-import {Route, Routes} from 'react-router-dom'
-import {connect} from "react-redux";
+import { Route, Routes } from 'react-router-dom'
+import { connect } from "react-redux";
 
-import MainPage from "./components/main-page/MainPage";
-import ArticlePage from "./components/article-page/ArticlePage";
+import { ArticlePage, MainPage, Footer } from "./components";
 
-import {AsyncOperation} from "./reducer/reducer";
+import { AsyncOperation } from "./reducer/reducer";
 
 const App = (props) => {
-    const {getCurrentArticle, getArticles} = props;
+    const { getCurrentArticle, getArticles } = props;
     const LoadingArticles = () => {
         getArticles();
-        return <MainPage/>;
+        return <MainPage />;
     };
 
     const LoadingArticle = () => {
         getCurrentArticle(window.location.pathname.slice(1));
-        return <ArticlePage/>
+        return <ArticlePage />
     };
 
     return (
-        <Routes>
-            <Route path="/" element={<LoadingArticles/>}/>
-            <Route path="/:id" element={<LoadingArticle/>}/>
-        </Routes>
+        <>
+            <Routes>
+                <Route path="/" element={<LoadingArticles />} />
+                <Route path="/:id" element={<LoadingArticle />} />
+            </Routes>
+            <Footer />
+        </>
     );
 };
 

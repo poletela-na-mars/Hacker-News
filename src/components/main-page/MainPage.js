@@ -1,15 +1,14 @@
-import React, {useEffect} from "react";
-import {Link} from "react-router-dom";
-import {connect} from "react-redux";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Header from "../header/Header";
 import Loader from "../loader/Loader";
 import ScrollTop from "../scroll-top/ScrollTop";
-import Footer from "../footer/Footer";
 
-import {fixDate} from "../../utils";
-import {AsyncOperation} from "../../reducer/reducer";
-import {ActionCreator} from "../../reducer/action-creator";
+import { fixDate } from "../../utils";
+import { AsyncOperation } from "../../reducer/reducer";
+import { ActionCreator } from "../../reducer/action-creator";
 
 const MainPage = (props) => {
     const {
@@ -51,19 +50,18 @@ const MainPage = (props) => {
     if (isEachArticleLoaded) {
         return (
             <div className="block">
-                <Header page={`MAIN_PAGE`} minimum={false}/>
+                <Header page={`MAIN_PAGE`} minimum={false} />
                 <ul className="list">
                     {getArticlesList(articles)}
                 </ul>
-                <ScrollTop/>
-                <Footer/>
+                <ScrollTop />
             </div>
         );
     } else {
         return (
             <div className="load-container">
                 <div className="load">
-                    <Loader/>
+                    <Loader />
                 </div>
             </div>
         );

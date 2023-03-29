@@ -1,6 +1,6 @@
 import React from "react";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import DOMPurify from 'dompurify';
 
 import "./ArticlePage.css";
@@ -10,10 +10,9 @@ import Loader from "../loader/Loader";
 import Comments from "../comments/Comments";
 import ErrorPage from "../error-page/ErrorPage";
 import ScrollTop from "../scroll-top/ScrollTop";
-import Footer from "../footer/Footer";
 
-import {fixDate} from "../../utils";
-import {ActionCreator} from "../../reducer/action-creator";
+import { fixDate } from "../../utils";
+import { ActionCreator } from "../../reducer/action-creator";
 
 const ArticlePage = (props) => {
     const {
@@ -28,7 +27,7 @@ const ArticlePage = (props) => {
         changeCurrentArticleId(currentArticle.id);
         return (
             <div className="block">
-                <Header page={`ARTICLE_PAGE`} minimum={false}/>
+                <Header page={`ARTICLE_PAGE`} minimum={false} />
                 <div className="main-part">
                     <div className="about-article">
                         <div className="article-panel">
@@ -36,20 +35,22 @@ const ArticlePage = (props) => {
                                 dropCurrentArticle();
                                 changeCurrentArticleLoadingStatus(false);
                             }}>
-                                <div className="go-back-button"/>
+                                <div className="go-back-button" />
                             </Link>
                             <h1><a target="_blank" href={currentArticle.url}
-                                   style={currentArticle.url ? {} : {color: "black"}}
+                                   style={currentArticle.url ? {} : { color: "black" }}
                                    className="article-title">{currentArticle.title}</a></h1>
                         </div>
                         {currentArticle.text ? <p className="optional-text"
-                                                  dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(currentArticle.text)}}>
+                                                  dangerouslySetInnerHTML={{
+                                                      __html: DOMPurify.sanitize(currentArticle.text)
+                                                  }}>
                         </p> : ""}
                         <div className="article-info shadow-form">
                             {currentArticle.url ?
                                 <a target="_blank" href={currentArticle.url} className="read-button"
                                    rel="noreferrer">Читать</a> :
-                                <div className="read-button-grey"/>}
+                                <div className="read-button-grey" />}
                             <div className="article-date"><span
                                 className="blue-words">Date:</span>&ensp;{fixDate(currentArticle.time)}
                             </div>
@@ -62,19 +63,18 @@ const ArticlePage = (props) => {
                                 `${currentArticle.descendants} comments`) : `0 comments`}</p>
                         </div>
                     </div>
-                    <Comments/>
+                    <Comments />
                 </div>
-                <Footer/>
-                <ScrollTop/>
+                <ScrollTop />
             </div>
         );
     } else if (currentArticle === -1) {
-        return <ErrorPage/>;
+        return <ErrorPage />;
     } else {
         return (
             <div className="load-container">
                 <div className="load">
-                    <Loader/>
+                    <Loader />
                 </div>
             </div>
         );

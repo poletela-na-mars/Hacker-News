@@ -1,11 +1,10 @@
-import React, {useEffect} from "react";
-import {connect} from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 
 import Comment from "../comment/Comment";
 
-import {ActionCreator} from "../../reducer/action-creator";
-import {AsyncOperation} from "../../reducer/reducer";
+import { ActionCreator } from "../../reducer/action-creator";
+import { AsyncOperation } from "../../reducer/reducer";
 
 const Comments = (props) => {
     const {articleComments, currentArticle, isEachCommentLoaded,
@@ -24,7 +23,7 @@ const Comments = (props) => {
     });
 
     const getCommentsElements = (comments) => {
-        return comments.map((it) => <Comment key={uuidv4()} comment={it}/>);
+        return comments.map((it) => <Comment key={it.id} comment={it}/>);
     };
 
     return (
